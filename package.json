@@ -1,0 +1,37 @@
+{
+  "name": "nocks-sdk-node",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "./index.js",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.9.1",
+    "mocha": "^5.1.0",
+    "nyc": "^12.0.2",
+    "proxyquire": "^2.0.1",
+    "sinon": "^4.5.0"
+  },
+  "scripts": {
+    "lint": "eslint --ignore-path .gitignore ./src",
+    "lint-fix": "eslint --ignore-path .gitignore ./src --fix",
+    "pretest": "npm run lint",
+    "test": "nyc mocha --recursive"
+  },
+  "files": [
+    "index.js",
+    "oauth.js",
+    "api.js",
+    "errors.js",
+    "src"
+  ],
+  "engines": {
+    "node": ">=7.0.0"
+  }
+}
