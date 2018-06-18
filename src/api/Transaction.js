@@ -32,7 +32,7 @@ module.exports = (config) => {
     method: 'POST',
     baseURL: config.baseUrl,
     url: '/transaction',
-    accessToken: config.accessToken,
+    accessToken: config.accessToken || undefined, // Optional accessToken
     data: TransactionTransformer.reverseTransform(data, { prepareForRequest: true }),
   })
     .then((response) => TransactionTransformer.transform(response.data));

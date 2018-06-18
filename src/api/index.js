@@ -17,6 +17,8 @@ const Balance = require('./Balance');
 const TradeOrder = require('./TradeOrder');
 const Withdrawal = require('./Withdrawal');
 const Deposit = require('./Deposit');
+const Address = require('./Address');
+const Setting = require('./Setting');
 
 /**
  * Configure API accesses
@@ -53,6 +55,8 @@ const scope = ({ platform = constants.platform.PRODUCTION.name, accessToken = nu
     tradeOrder: TradeOrder(apiConfig),
     withdrawal: Withdrawal(apiConfig),
     deposit: Deposit(apiConfig),
+    address: Address(apiConfig),
+    setting: Setting(apiConfig),
   };
 };
 
