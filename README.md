@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/nocks-sdk-node.svg)](https://badge.fury.io/js/nocks-sdk-node)
+
 # Nocks SDK Node
 
 Nocks Node SDK is a node package arround the Nocks API. It can be used in any (`>=7.0.0`) Node environment and, because it doesn't use any `core Node JS modules`, it is also compatible with a browser environment, so it can, for example, be used in React(-native).
