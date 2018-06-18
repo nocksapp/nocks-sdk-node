@@ -3,6 +3,7 @@ const { ValidationError } = require('./../errors');
 const PaginationTransformer = require('./transformers/Pagination');
 const TransactionTransformer = require('./transformers/Transaction');
 const TransactionQuoteTransformer = require('./transformers/TransactionQuote');
+const TransactionStatisticTransformer = require('./transformers/TransactionStatistic');
 const { positiveInteger, buildQueryString } = require('./../utilities');
 const constants = require('./../constants');
 
@@ -109,11 +110,28 @@ module.exports = (config) => {
     });
   };
 
+
+  /**
+   * Get the transaction statistics
+   */
+  const statistics = () => {
+    return makeRequest({
+      ...config.request,
+      baseURL: config.baseUrl,
+      url: '/transaction-statistics',
+    })
+      .then((response) => Object.keys(response.data)
+        .reduce((obj, key) => {
+          return Object.assign({}, obj, { [key]: TransactionStatisticTransformer.transform(response.data[key]) });
+        }, {}));
+  };
+
   return {
     quote,
     create,
     find,
     findOne,
     cancel,
+    statistics,
   };
 };
