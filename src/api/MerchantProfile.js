@@ -3,7 +3,7 @@ const { ValidationError } = require('./../errors');
 const { positiveInteger } = require('./../utilities');
 const PaginationTransformer = require('./transformers/Pagination');
 const MerchantProfileTransformer = require('./transformers/MerchantProfile');
-const TurnoverTransformer = require('./transformers/TurnoverTransformer');
+const TurnoverTransformer = require('./transformers/Turnover');
 const constants = require('./../constants');
 
 module.exports = (config) => {
