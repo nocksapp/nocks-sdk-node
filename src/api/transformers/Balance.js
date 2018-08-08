@@ -1,4 +1,6 @@
 const AmountTransformer = require('./Amount');
+const UserTransformer = require('./User');
+const MerchantTransformer = require('./Merchant');
 
 const transformCurrency = (currency) => AmountTransformer.transform(Object.assign({}, currency, {
   deposit_payment_methods: currency.deposit_payment_methods.data,
@@ -9,9 +11,12 @@ const transformCurrency = (currency) => AmountTransformer.transform(Object.assig
  * Transform balance
  *
  * @param balance
+ * @param config
  */
-const transform = (balance) => AmountTransformer.transform(Object.assign({}, balance, {
+const transform = (balance, config) => AmountTransformer.transform(Object.assign({}, balance, {
   currency: transformCurrency(AmountTransformer.transform(balance.currency.data)),
+  balanceable: balance.type === 'merchant' ?
+    MerchantTransformer.transform(balance.balanceable.data, config) : UserTransformer.transform(balance.balanceable.data),
 }));
 
 /**
