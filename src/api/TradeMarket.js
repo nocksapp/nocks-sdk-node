@@ -6,6 +6,7 @@ const TradeMarketBookTransformer = require('./transformers/TradeMarketBook');
 const TradeMarketHistoryTransformer = require('./transformers/TradeMarketHistory');
 const TradeMarketDistributionTransformer = require('./transformers/TradeMarketDistribution');
 const TradeMarketCandlesTransformer = require('./transformers/TradeMarketCandles');
+const TradeMarketQuoteTransformer = require('./transformers/TradeMarketQuote');
 const { positiveInteger } = require('./../utilities');
 const constants = require('./../constants');
 
@@ -124,6 +125,40 @@ module.exports = (config) => {
       .then((response) => response.data.map(TradeMarketCandlesTransformer.transform));
   };
 
+  /**
+   * Get the quote
+   *
+   * @param code
+   * @param side
+   * @param amount
+   * @param amountType
+   */
+  const quote = ({
+    code, side, amount, amountType,
+  }) => {
+    // Code is required
+    if (!isValidRequiredString(code)) {
+      return Promise.reject(new ValidationError('Cannot retrieve quote without "code"', constants.errors.INVALID_CODE));
+    }
+
+    // Side is required
+    if (!isValidRequiredString(side)) {
+      return Promise.reject(new ValidationError('Cannot retrieve quote without "side"', constants.errors.INVALID_SIDE));
+    }
+
+    const value = positiveInteger(amount, false);
+    if (!value) {
+      return Promise.reject(new ValidationError('Cannot retrieve quote without valid "amount"', constants.errors.INVALID_AMOUNT));
+    }
+
+    return makeRequest({
+      ...config.request,
+      baseURL: config.baseUrl,
+      url: `/trade-market/${code}/quote/${side}/${value}/${amountType}`,
+    })
+      .then((response) => TradeMarketQuoteTransformer.transform(response.data));
+  };
+
   return {
     find,
     findOne,
@@ -131,5 +166,6 @@ module.exports = (config) => {
     history,
     distribution,
     candles,
+    quote,
   };
 };

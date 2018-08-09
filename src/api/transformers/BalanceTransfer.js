@@ -15,9 +15,7 @@ const transform = (data) => AmountTransformer.transform(DateTransformer.transfor
  *
  * @param data
  */
-const reverseTransform = (data) => {
-  return AmountTransformer.reverseTransform(data);
-};
+const reverseTransform = (data) => AmountTransformer.reverseTransform(data);
 
 module.exports = {
   transform,

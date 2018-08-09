@@ -13,6 +13,8 @@ module.exports = {
     INVALID_MERCHANT: 'invalid_merchant',
     INVALID_CODE: 'invalid_code',
     INVALID_CURRENCY: 'invalid_currency',
+    INVALID_SIDE: 'invalid_side',
+    INVALID_AMOUNT: 'invalid_amount',
   },
   transaction: {
     OPEN: 'open',

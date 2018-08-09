@@ -75,6 +75,6 @@ module.exports = (config) => {
     create,
     find,
     findOne,
-    transfer
+    transfer,
   };
 };
