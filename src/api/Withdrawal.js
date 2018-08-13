@@ -10,13 +10,15 @@ module.exports = (config) => {
    * Create a withdrawal
    *
    * @param data
+   * @param twoFactorCode (optional)
    */
-  const create = (data) => makeRequest({
+  const create = (data, { twoFactorCode } = {}) => makeRequest({
     ...config.request,
     method: 'POST',
     baseURL: config.baseUrl,
     url: '/withdrawal',
     accessToken: config.accessToken,
+    twoFactorCode,
     data: WithdrawalTransformer.reverseTransform(data, { prepareForRequest: true }),
   })
     .then((response) => WithdrawalTransformer.transform(response.data));
