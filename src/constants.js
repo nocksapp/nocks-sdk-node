@@ -22,6 +22,7 @@ module.exports = {
     CANCELLED: 'cancelled',
     PAID: 'completed',
     EXPIRED: 'expired',
+    REFUNDED: 'refunded',
   },
   payment: {
     OPEN: 'open',
@@ -29,6 +30,7 @@ module.exports = {
     CANCELLED: 'cancelled',
     PAID: 'paid',
     EXPIRED: 'expired',
+    REFUNDED: 'refunded',
   },
   merchantClearing: {
     OPEN: 'open',

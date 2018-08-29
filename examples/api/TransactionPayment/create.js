@@ -21,4 +21,5 @@ return scope.transactionPayment.create(transaction, {
     console.log(payment.isCancelled());
     console.log(payment.isPaid());
     console.log(payment.isExpired());
+    console.log(payment.isRefunded());
   });

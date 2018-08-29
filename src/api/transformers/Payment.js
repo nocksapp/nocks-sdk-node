@@ -14,6 +14,7 @@ const transform = (payment) => DateTransformer.transform(AmountTransformer.trans
   isCancelled: () => payment.status === constants.payment.CANCELLED,
   isPaid: () => payment.status === constants.payment.PAID,
   isExpired: () => payment.status === constants.payment.EXPIRED,
+  isRefunded: () => payment.status === constants.payment.REFUNDED,
 
   payment_method: payment.payment_method && payment.payment_method.data ? payment.payment_method.data : undefined,
 })));

@@ -14,7 +14,7 @@ module.exports = (config) => {
       currency,
     },
   })
-    .then(response => response.validation);
+    .then((response) => response.validation);
 
   /**
    * Validate multiple addresses in an array
@@ -30,7 +30,7 @@ module.exports = (config) => {
       addresses,
     },
   })
-    .then(response => response.validation);
+    .then((response) => response.validation);
 
   return {
     validate,

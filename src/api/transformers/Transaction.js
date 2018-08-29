@@ -16,6 +16,7 @@ const transform = (transaction) => AmountTransformer.transform(DateTransformer.t
   isCancelled: () => transaction.status === constants.transaction.CANCELLED,
   isPaid: () => transaction.status === constants.transaction.PAID,
   isExpired: () => transaction.status === constants.transaction.EXPIRED,
+  isRefunded: () => transaction.status === constants.transaction.REFUNDED,
 
   // Transform transaction payments and status transitions
   payments: transaction.payments && transaction.payments.data ?

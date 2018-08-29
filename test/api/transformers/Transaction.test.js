@@ -64,12 +64,14 @@ describe('transform', () => {
     expect(result).to.have.property('isCancelled').to.be.a('function');
     expect(result).to.have.property('isPaid').to.be.a('function');
     expect(result).to.have.property('isExpired').to.be.a('function');
+    expect(result).to.have.property('isRefunded').to.be.a('function');
 
     expect(result.isOpen()).to.be.equal(false);
     expect(result.isPending()).to.be.equal(true);
     expect(result.isCancelled()).to.be.equal(false);
     expect(result.isPaid()).to.be.equal(false);
     expect(result.isExpired()).to.be.equal(false);
+    expect(result.isRefunded()).to.be.equal(false);
 
     sinon.assert.calledOnce(dateTransformerTransformStub);
     sinon.assert.notCalled(dateTransformerReverseTransformStub);
@@ -100,12 +102,14 @@ describe('transform', () => {
     expect(result).to.have.property('isCancelled').to.be.a('function');
     expect(result).to.have.property('isPaid').to.be.a('function');
     expect(result).to.have.property('isExpired').to.be.a('function');
+    expect(result).to.have.property('isRefunded').to.be.a('function');
 
     expect(result.isOpen()).to.be.equal(false);
     expect(result.isPending()).to.be.equal(true);
     expect(result.isCancelled()).to.be.equal(false);
     expect(result.isPaid()).to.be.equal(false);
     expect(result.isExpired()).to.be.equal(false);
+    expect(result.isRefunded()).to.be.equal(false);
 
     sinon.assert.calledOnce(dateTransformerTransformStub);
     sinon.assert.notCalled(dateTransformerReverseTransformStub);
