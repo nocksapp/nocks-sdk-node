@@ -4,12 +4,11 @@ const TransactionTransformer = require('./Transaction');
 
 /**
  * Transform
- *
- * @param bill
  */
-const transform = (bill) => AmountTransformer.transform(DateTransformer.transform(Object.assign({}, bill, {
+const transform = ({ platform }) => (bill) => AmountTransformer.transform(DateTransformer.transform(Object.assign({}, bill, {
   // Transform transaction
   transactions: bill.transactions.data.map(TransactionTransformer.transform),
+  url: `${platform.web}/payment-request/${bill.uuid}`,
 })));
 
 /**

@@ -1,7 +1,17 @@
 module.exports = {
   platform: {
-    PRODUCTION: { name: 'production', oauth: 'https://www.nocks.com/oauth', api: 'https://api.nocks.com/api/v2' },
-    SANDBOX: { name: 'sandbox', oauth: 'https://sandbox.nocks.com/oauth', api: 'https://sandbox.nocks.com/api/v2' },
+    PRODUCTION: {
+      name: 'production',
+      web: 'https://www.nocks.com',
+      oauth: 'https://www.nocks.com/oauth',
+      api: 'https://api.nocks.com/api/v2',
+    },
+    SANDBOX: {
+      name: 'sandbox',
+      web: 'https://sandbox.nocks.com',
+      oauth: 'https://sandbox.nocks.com/oauth',
+      api: 'https://sandbox.nocks.com/api/v2',
+    },
   },
   errors: {
     INVALID_TWO_FACTOR_CODE: 'invalid_two_factor_code',

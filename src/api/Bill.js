@@ -19,7 +19,7 @@ module.exports = (config) => {
     accessToken: config.accessToken,
     data: BillTransformer.reverseTransform(data, { prepareForRequest: true }),
   })
-    .then((response) => BillTransformer.transform(response.data));
+    .then((response) => BillTransformer.transform(config)(response.data));
 
   /**
    * Get bills
@@ -33,7 +33,7 @@ module.exports = (config) => {
     accessToken: config.accessToken,
   })
     .then((response) => ({
-      data: response.data.map(BillTransformer.transform),
+      data: response.data.map(BillTransformer.transform(config)),
       pagination: PaginationTransformer.transform(response.meta.pagination),
     }));
 
@@ -54,7 +54,7 @@ module.exports = (config) => {
       url: `/bill/${uuid}`,
       accessToken: config.accessToken,
     })
-      .then((response) => BillTransformer.transform(response.data));
+      .then((response) => BillTransformer.transform(config)(response.data));
   };
 
   /**
@@ -77,7 +77,7 @@ module.exports = (config) => {
       accessToken: config.accessToken,
       data: BillTransformer.reverseTransform(data, { prepareForRequest: true }),
     })
-      .then((response) => BillTransformer.transform(response.data));
+      .then((response) => BillTransformer.transform(config)(response.data));
   };
 
   /**

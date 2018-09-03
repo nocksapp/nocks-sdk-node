@@ -35,9 +35,12 @@ const scope = ({ platform = constants.platform.PRODUCTION.name, accessToken = nu
     throw new ConfigurationError(`"platform" must be one of ${platformNames.join(',')}`);
   }
 
+  const platformConstants = platforms.find((x) => x.name === platform);
+
   const apiConfig = Object.assign({}, config, initialConfig[platform], {
-    baseUrl: platforms.find((x) => x.name === platform).api,
+    baseUrl: platformConstants.api,
     accessToken,
+    platform: platformConstants,
   });
 
   return {
