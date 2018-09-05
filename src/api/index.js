@@ -19,6 +19,7 @@ const Withdrawal = require('./Withdrawal');
 const Deposit = require('./Deposit');
 const Address = require('./Address');
 const Setting = require('./Setting');
+const Raw = require('./Raw');
 
 /**
  * Configure API accesses
@@ -60,6 +61,8 @@ const scope = ({ platform = constants.platform.PRODUCTION.name, accessToken = nu
     deposit: Deposit(apiConfig),
     address: Address(apiConfig),
     setting: Setting(apiConfig),
+
+    raw: Raw(apiConfig),
   };
 };
 
