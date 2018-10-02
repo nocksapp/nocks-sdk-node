@@ -1,6 +1,6 @@
 const scope = require('../scope');
 
-return scope.transactionPayment.findOne({ uuid: '88c9d253-f14b-42de-9d54-64b960d92135' })
+return scope.transactionPayment.findOne({ uuid: '84892770-7b33-49e2-9c23-73679ca7defd' })
   .then((payment) => {
     console.log(payment);
 

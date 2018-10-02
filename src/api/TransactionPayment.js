@@ -14,7 +14,7 @@ module.exports = (config) => {
     // Transaction is required
     if (!isValidRequiredString(transaction.uuid)) {
       return Promise.reject(
-        new ValidationError('Cannot create a transaction payment without "transaction"', constants.errors.INVALID_MERCHANT)
+        new ValidationError('Cannot create a payment without "transaction"', constants.errors.INVALID_MERCHANT)
       );
     }
 
@@ -50,23 +50,18 @@ module.exports = (config) => {
   };
 
   /**
-   * Cancel a transaction payment
+   * Cancel a payment
    *
-   * @param transaction
    * @param uuid
+   * @param paymentUuid - Backward Compatibility
    */
-  const cancel = (transaction, { uuid }) => {
-    // Transaction is required
-    if (!isValidRequiredString(transaction.uuid)) {
-      return Promise.reject(
-        new ValidationError('Cannot cancel a transaction payment without "transaction"', constants.errors.INVALID_MERCHANT)
-      );
-    }
+  const cancel = ({ uuid }, { uuid: paymentUuid = null } = {}) => {
+    const payment = paymentUuid !== null ? paymentUuid : uuid;
 
     // Uuid is required
-    if (!isValidRequiredString(uuid)) {
+    if (!isValidRequiredString(payment)) {
       return Promise.reject(
-        new ValidationError('Cannot cancel a transaction payment without "uuid"', constants.errors.INVALID_UUID)
+        new ValidationError('Cannot cancel a payment without "uuid"', constants.errors.INVALID_UUID)
       );
     }
 
@@ -74,7 +69,7 @@ module.exports = (config) => {
       ...config.request,
       method: 'DELETE',
       baseURL: config.baseUrl,
-      url: `/transaction/${transaction.uuid}/payment/${uuid}`,
+      url: `/payment/${payment}`,
       accessToken: config.accessToken,
     });
   };
