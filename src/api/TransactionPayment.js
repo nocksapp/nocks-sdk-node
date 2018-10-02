@@ -30,6 +30,26 @@ module.exports = (config) => {
   };
 
   /**
+   * Get one payment
+   *
+   * @param uuid
+   */
+  const findOne = ({ uuid }) => {
+    // Uuid is required
+    if (!isValidRequiredString(uuid)) {
+      return Promise.reject(new ValidationError('Cannot find a payment without "uuid"', constants.errors.INVALID_UUID));
+    }
+
+    return makeRequest({
+      ...config.request,
+      baseURL: config.baseUrl,
+      url: `/payment/${uuid}`,
+      accessToken: config.accessToken,
+    })
+      .then((response) => PaymentTransformer.transform(response.data));
+  };
+
+  /**
    * Cancel a transaction payment
    *
    * @param transaction
@@ -61,6 +81,7 @@ module.exports = (config) => {
 
   return {
     create,
+    findOne,
     cancel,
   };
 };

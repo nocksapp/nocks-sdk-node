@@ -13,13 +13,8 @@ return scope.transactionPayment.create(transaction, {
 })
   .then((payment) => {
     console.log(payment);
-    console.log(payment.amount.value);
-    console.log(payment.payment_method);
 
-    console.log(payment.isOpen());
-    console.log(payment.isPending());
-    console.log(payment.isCancelled());
-    console.log(payment.isPaid());
-    console.log(payment.isExpired());
-    console.log(payment.isRefunded());
+    /**
+     * For the additional properties for payment check ./findOne
+     */
   });
