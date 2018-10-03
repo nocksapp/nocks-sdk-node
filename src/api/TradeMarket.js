@@ -7,7 +7,7 @@ const TradeMarketHistoryTransformer = require('./transformers/TradeMarketHistory
 const TradeMarketDistributionTransformer = require('./transformers/TradeMarketDistribution');
 const TradeMarketCandlesTransformer = require('./transformers/TradeMarketCandles');
 const TradeMarketQuoteTransformer = require('./transformers/TradeMarketQuote');
-const { positiveInteger } = require('./../utilities');
+const { positiveInteger, stringToFloat } = require('./../utilities');
 const constants = require('./../constants');
 
 module.exports = (config) => {
@@ -146,8 +146,8 @@ module.exports = (config) => {
       return Promise.reject(new ValidationError('Cannot retrieve quote without "side"', constants.errors.INVALID_SIDE));
     }
 
-    const value = positiveInteger(amount, false);
-    if (!value) {
+    const value = stringToFloat(amount);
+    if (value <= 0) {
       return Promise.reject(new ValidationError('Cannot retrieve quote without valid "amount"', constants.errors.INVALID_AMOUNT));
     }
 
