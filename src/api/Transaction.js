@@ -42,7 +42,7 @@ module.exports = (config) => {
    * Get transactions
    */
   const find = ({
-    page = 1, status = null, merchantProfileUuid = null, search = null,
+    page = 1, status = null, merchantProfileUuid = null, merchantReference = null, search = null,
   } = {}) => {
     const query = { page: positiveInteger(page, 1) };
 
@@ -52,6 +52,10 @@ module.exports = (config) => {
 
     if (merchantProfileUuid !== null) {
       query['merchant-profile'] = merchantProfileUuid;
+    }
+
+    if (merchantReference !== null) {
+      query.merchant_reference = merchantReference;
     }
 
     if (search !== null) {
