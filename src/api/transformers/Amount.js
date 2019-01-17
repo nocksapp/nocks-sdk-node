@@ -3,7 +3,7 @@ const constants = require('./../../constants');
 
 const dateProperties = [
   'source_amount', 'target_amount', 'received_amount', 'fee_amount', 'amount', 'tip_amount',
-  'fee', 'amount_fee', 'amount_fillable', 'amount_filled', 'amount_cost',
+  'fee', 'amount_fee', 'amount_fillable', 'amount_filled', 'amount_cost', 'amount_refunded',
   'amount_net', 'amount_vat', 'amount_gross', 'vat', 'rate', 'rate_actual',
   'tip', 'total', 'last', 'volume', 'quote_volume', 'base_volume', 'low', 'high', 'buy', 'sell', 'size',
   'base_sum', 'sum', 'cost', 'eur_value', 'average', 'open', 'close', 'available', 'reserved', 'stop_rate',

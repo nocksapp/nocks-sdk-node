@@ -1,5 +1,6 @@
 const AmountTransformer = require('./Amount');
 const DateTransformer = require('./Date');
+const PaymentMethodTransformer = require('./PaymentMethod');
 const constants = require('./../../constants');
 
 /**
@@ -11,7 +12,8 @@ const transform = (deposit) => AmountTransformer.transform(DateTransformer.trans
   // Add confirmed function
   isConfirmed: () => deposit.status === constants.deposit.CONFIRMED,
 
-  payment_method: deposit.payment_method && deposit.payment_method.data ? deposit.payment_method.data : undefined,
+  payment_method: deposit.payment_method && deposit.payment_method.data ?
+    PaymentMethodTransformer.transform(deposit.payment_method.data) : undefined,
 })));
 
 /**
@@ -26,7 +28,7 @@ const reverseTransform = (deposit, { prepareForRequest = false } = {}) => {
   // Reverse payment_method
   if (deposit.payment_method && !prepareForRequest) {
     reverseObject.payment_method = {
-      data: deposit.payment_method,
+      data: PaymentMethodTransformer.reverseTransform(deposit.payment_method),
     };
   }
 

@@ -12,17 +12,22 @@ const amountTransformerStub = { transform: amountTransformerTransformStub, rever
 
 const paymentTransformerTransformStub = sinon.stub().returnsArg(0);
 const paymentTransformerReverseTransformStub = sinon.stub().returnsArg(0);
-const paymentTransformerStub = { transform: paymentTransformerTransformStub, reverseTransform: paymentTransformerReverseTransformStub};
+const paymentTransformerStub = { transform: paymentTransformerTransformStub, reverseTransform: paymentTransformerReverseTransformStub };
 
 const statusTransitionTransformerTransformStub = sinon.stub().returnsArg(0);
 const statusTransitionTransformerReverseTransformStub = sinon.stub().returnsArg(0);
 const statusTransitionTransformerStub = { transform: statusTransitionTransformerTransformStub, reverseTransform: statusTransitionTransformerReverseTransformStub };
+
+const paymentMethodTransitionTransformerTransformStub = sinon.stub().returnsArg(0);
+const paymentMethodTransitionTransformerReverseTransformStub = sinon.stub().returnsArg(0);
+const paymentMethodTransitionTransformerStub = { transform: paymentMethodTransitionTransformerTransformStub, reverseTransform: paymentMethodTransitionTransformerReverseTransformStub };
 
 const TransactionTransformer = proxyquire('./../../../src/api/transformers/Transaction', {
   './Date': dateTransformerStub,
   './Amount': amountTransformerStub,
   './Payment': paymentTransformerStub,
   './StatusTransition': statusTransitionTransformerStub,
+  './PaymentMethod': paymentMethodTransitionTransformerStub,
 });
 
 const expect = chai.expect;
@@ -39,6 +44,9 @@ afterEach(() => {
 
   statusTransitionTransformerTransformStub.resetHistory();
   statusTransitionTransformerReverseTransformStub.resetHistory();
+
+  paymentMethodTransitionTransformerTransformStub.resetHistory();
+  paymentMethodTransitionTransformerReverseTransformStub.resetHistory();
 });
 
 describe('transform', () => {
@@ -51,6 +59,9 @@ describe('transform', () => {
       },
       status_transitions: {
         data: [{}, {}],
+      },
+      payment_method: {
+        data: {},
       }
     });
 
@@ -84,6 +95,9 @@ describe('transform', () => {
 
     sinon.assert.calledTwice(statusTransitionTransformerTransformStub);
     sinon.assert.notCalled(statusTransitionTransformerReverseTransformStub);
+
+    sinon.assert.calledOnce(paymentMethodTransitionTransformerTransformStub);
+    sinon.assert.notCalled(paymentMethodTransitionTransformerReverseTransformStub);
   });
 
   it('should transform a (socket) transaction', () => {
@@ -122,6 +136,9 @@ describe('transform', () => {
 
     sinon.assert.notCalled(statusTransitionTransformerTransformStub);
     sinon.assert.notCalled(statusTransitionTransformerReverseTransformStub);
+
+    sinon.assert.notCalled(paymentMethodTransitionTransformerTransformStub);
+    sinon.assert.notCalled(paymentMethodTransitionTransformerReverseTransformStub);
   });
 });
 
@@ -132,6 +149,7 @@ describe('reverseTransform', () => {
       status: 'pending',
       payments: [{}, {}],
       status_transitions: [{}, {}],
+      payment_method: {},
     });
 
     expect(result).to.be.deep.equal({
@@ -139,6 +157,7 @@ describe('reverseTransform', () => {
       status: 'pending',
       payments: { data: [{}, {}] },
       status_transitions: { data: [{}, {}] },
+      payment_method: { data: {} },
     });
 
     sinon.assert.notCalled(dateTransformerTransformStub);
@@ -152,6 +171,9 @@ describe('reverseTransform', () => {
 
     sinon.assert.notCalled(statusTransitionTransformerTransformStub);
     sinon.assert.calledTwice(statusTransitionTransformerReverseTransformStub);
+
+    sinon.assert.notCalled(paymentMethodTransitionTransformerTransformStub);
+    sinon.assert.calledOnce(paymentMethodTransitionTransformerReverseTransformStub);
   });
 
   it('should reverse transform a transaction for request', () => {
@@ -160,6 +182,7 @@ describe('reverseTransform', () => {
       status: 'pending',
       payments: [{}, {}],
       status_transitions: [{}, {}],
+      payment_method: {},
     }, { prepareForRequest: true });
 
     expect(result).to.be.deep.equal({
@@ -167,6 +190,7 @@ describe('reverseTransform', () => {
       status: 'pending',
       payments: [{}, {}],
       status_transitions: [{}, {}],
+      payment_method: {},
     });
 
     sinon.assert.notCalled(dateTransformerTransformStub);
@@ -180,5 +204,8 @@ describe('reverseTransform', () => {
 
     sinon.assert.notCalled(statusTransitionTransformerTransformStub);
     sinon.assert.notCalled(statusTransitionTransformerReverseTransformStub);
+
+    sinon.assert.notCalled(paymentMethodTransitionTransformerTransformStub);
+    sinon.assert.notCalled(paymentMethodTransitionTransformerReverseTransformStub);
   });
 });
