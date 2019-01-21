@@ -17,7 +17,7 @@ const Balance = require('./Balance');
 const TradeOrder = require('./TradeOrder');
 const Withdrawal = require('./Withdrawal');
 const Deposit = require('./Deposit');
-const Address = require('./Address');
+const PaymentAddress = require('./PaymentAddress');
 const Setting = require('./Setting');
 const Raw = require('./Raw');
 
@@ -59,7 +59,7 @@ const scope = ({ platform = constants.platform.PRODUCTION.name, accessToken = nu
     tradeOrder: TradeOrder(apiConfig),
     withdrawal: Withdrawal(apiConfig),
     deposit: Deposit(apiConfig),
-    address: Address(apiConfig),
+    paymentAddress: PaymentAddress(apiConfig),
     setting: Setting(apiConfig),
 
     raw: Raw(apiConfig),
