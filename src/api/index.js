@@ -3,23 +3,24 @@ const { ConfigurationError } = require('./../errors');
 const constants = require('./../constants');
 const initialConfig = require('./../config');
 
-const User = require('./User');
-const Transaction = require('./Transaction');
-const TransactionPayment = require('./TransactionPayment');
+const Address = require('./Address');
+const Balance = require('./Balance');
+const Bill = require('./Bill');
+const Deposit = require('./Deposit');
+const FundingSource = require('./FundingSource');
 const Merchant = require('./Merchant');
 const MerchantClearing = require('./MerchantClearing');
 const MerchantInvoice = require('./MerchantInvoice');
 const MerchantProfile = require('./MerchantProfile');
-const Bill = require('./Bill');
-const TradeMarket = require('./TradeMarket');
-const FundingSource = require('./FundingSource');
-const Balance = require('./Balance');
-const TradeOrder = require('./TradeOrder');
-const Withdrawal = require('./Withdrawal');
-const Deposit = require('./Deposit');
 const PaymentAddress = require('./PaymentAddress');
-const Setting = require('./Setting');
 const Raw = require('./Raw');
+const Setting = require('./Setting');
+const TradeMarket = require('./TradeMarket');
+const TradeOrder = require('./TradeOrder');
+const Transaction = require('./Transaction');
+const TransactionPayment = require('./TransactionPayment');
+const User = require('./User');
+const Withdrawal = require('./Withdrawal');
 
 /**
  * Configure API accesses
@@ -45,24 +46,24 @@ const scope = ({ platform = constants.platform.PRODUCTION.name, accessToken = nu
   });
 
   return {
-    user: User(apiConfig),
-    transaction: Transaction(apiConfig),
-    transactionPayment: TransactionPayment(apiConfig),
+    address: Address(apiConfig),
+    balance: Balance(apiConfig),
+    bill: Bill(apiConfig),
+    deposit: Deposit(apiConfig),
+    fundingSource: FundingSource(apiConfig),
     merchant: Merchant(apiConfig),
     merchantClearing: MerchantClearing(apiConfig),
     merchantInvoice: MerchantInvoice(apiConfig),
     merchantProfile: MerchantProfile(apiConfig),
-    bill: Bill(apiConfig),
-    tradeMarket: TradeMarket(apiConfig),
-    fundingSource: FundingSource(apiConfig),
-    balance: Balance(apiConfig),
-    tradeOrder: TradeOrder(apiConfig),
-    withdrawal: Withdrawal(apiConfig),
-    deposit: Deposit(apiConfig),
     paymentAddress: PaymentAddress(apiConfig),
-    setting: Setting(apiConfig),
-
     raw: Raw(apiConfig),
+    setting: Setting(apiConfig),
+    tradeMarket: TradeMarket(apiConfig),
+    tradeOrder: TradeOrder(apiConfig),
+    transaction: Transaction(apiConfig),
+    transactionPayment: TransactionPayment(apiConfig),
+    user: User(apiConfig),
+    withdrawal: Withdrawal(apiConfig),
   };
 };
 
