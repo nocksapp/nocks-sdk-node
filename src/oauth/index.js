@@ -91,7 +91,7 @@ const scope = ({
      */
     requestToken: ({ code }) => {
       if (clientId === null) {
-        return Promise.reject(ConfigurationError('Cannot request a token without a clientId configured'));
+        return Promise.reject(new ConfigurationError('Cannot request a token without a clientId configured'));
       }
 
       if (clientSecret === null) {
@@ -132,7 +132,7 @@ const scope = ({
      */
     refreshToken: ({ refreshToken }) => {
       if (clientId === null) {
-        return Promise.reject(ConfigurationError('Cannot refresh a token without a clientId configured'));
+        return Promise.reject(new ConfigurationError('Cannot refresh a token without a clientId configured'));
       }
 
       if (clientSecret === null) {
@@ -168,7 +168,7 @@ const scope = ({
      */
     passwordGrantToken: ({ username, password }) => {
       if (clientId === null) {
-        return Promise.reject(ConfigurationError('Cannot password grant a token without a clientId configured'));
+        return Promise.reject(new ConfigurationError('Cannot password grant a token without a clientId configured'));
       }
 
       if (clientSecret === null) {
