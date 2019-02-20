@@ -1,6 +1,6 @@
 const scope = require('../scope');
 
-return scope.transaction.findOne({ uuid: '7d419e21-a0de-4cb1-b2bd-26a461b1e884' })
+return scope.transaction.findOne({ uuid: '741967d9-ed7b-413c-9a82-90c7069779f7' })
   .then((transaction) => {
     console.log(transaction);
 
@@ -11,6 +11,8 @@ return scope.transaction.findOne({ uuid: '7d419e21-a0de-4cb1-b2bd-26a461b1e884' 
       console.log(payment.isPaid());
       console.log(payment.isExpired());
       console.log(payment.isRefunded());
+
+      console.log(payment.payment_method.isDefault());
     });
 
     console.log(transaction.status_transitions);
@@ -21,4 +23,6 @@ return scope.transaction.findOne({ uuid: '7d419e21-a0de-4cb1-b2bd-26a461b1e884' 
     console.log(transaction.isPaid());
     console.log(transaction.isExpired());
     console.log(transaction.isRefunded());
+
+    console.log(transaction.clearing_distribution);
   });

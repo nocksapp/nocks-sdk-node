@@ -10,9 +10,17 @@ const amountTransformerTransformStub = sinon.stub().returnsArg(0);
 const amountTransformerReverseTransformStub = sinon.stub().returnsArg(0);
 const amountTransformer = { transform: amountTransformerTransformStub, reverseTransform: amountTransformerReverseTransformStub };
 
+const paymentMethodTransformerTransformStub = sinon.stub().returnsArg(0);
+const paymentMethodTransformerReverseTransformStub = sinon.stub().returnsArg(0);
+const paymentMethodTransformer = {
+  transform: paymentMethodTransformerTransformStub,
+  reverseTransform: paymentMethodTransformerReverseTransformStub,
+};
+
 const PaymentTransformer = proxyquire('./../../../src/api/transformers/Payment', {
   './Date': dateTransformer,
-  './Amount': amountTransformer
+  './Amount': amountTransformer,
+  './PaymentMethod': paymentMethodTransformer,
 });
 
 const expect = chai.expect;
@@ -23,6 +31,9 @@ afterEach(() => {
 
   amountTransformerTransformStub.resetHistory();
   amountTransformerReverseTransformStub.resetHistory();
+
+  paymentMethodTransformerTransformStub.resetHistory();
+  paymentMethodTransformerReverseTransformStub.resetHistory();
 });
 
 describe('transform', () => {
@@ -35,7 +46,7 @@ describe('transform', () => {
       description: 'cf746fc8 Transaction',
       payment_method: {
         data: {}
-      },
+      }
     });
 
     expect(result).to.have.property('uuid').to.be.equal('cf746fc8-c162-4b79-b981-6266f02f86c8');
@@ -43,7 +54,6 @@ describe('transform', () => {
     expect(result).to.have.property('type').to.be.equal('transaction-source');
     expect(result).to.have.property('method_type').to.be.equal('redirect');
     expect(result).to.have.property('description').to.be.equal('cf746fc8 Transaction');
-    expect(result).to.have.property('payment_method').to.be.deep.equal({});
 
     expect(result).to.have.property('isCancelled').to.be.a('function');
     expect(result).to.have.property('isExpired').to.be.a('function');
@@ -64,6 +74,9 @@ describe('transform', () => {
 
     sinon.assert.calledOnce(amountTransformerTransformStub);
     sinon.assert.notCalled(amountTransformerReverseTransformStub);
+
+    sinon.assert.calledOnce(paymentMethodTransformerTransformStub);
+    sinon.assert.notCalled(paymentMethodTransformerReverseTransformStub);
   });
 });
 
@@ -85,7 +98,7 @@ describe('reverseTransform', () => {
       method_type: 'redirect',
       description: 'cf746fc8 Transaction',
       payment_method: {
-        data: {},
+        data: {}
       },
     });
 
@@ -94,6 +107,9 @@ describe('reverseTransform', () => {
 
     sinon.assert.notCalled(amountTransformerTransformStub);
     sinon.assert.calledOnce(amountTransformerReverseTransformStub);
+
+    sinon.assert.notCalled(paymentMethodTransformerTransformStub);
+    sinon.assert.calledOnce(paymentMethodTransformerReverseTransformStub);
   });
 
   it('should reverse transform a payment for request', () => {
@@ -120,5 +136,8 @@ describe('reverseTransform', () => {
 
     sinon.assert.notCalled(amountTransformerTransformStub);
     sinon.assert.calledOnce(amountTransformerReverseTransformStub);
+
+    sinon.assert.notCalled(paymentMethodTransformerTransformStub);
+    sinon.assert.notCalled(paymentMethodTransformerReverseTransformStub);
   });
 });

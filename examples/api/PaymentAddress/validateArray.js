@@ -1,6 +1,6 @@
 const scope = require('../scope');
 
-return scope.address.validateArray([
+return scope.paymentAddress.validateArray([
   { currency: 'NLG', address: 'TRt152vKGMdYUZCQutSxaHs8fYcbnmKTRM' },
   { currency: 'EUR', address: 'NL16ABNA0602167736' },
 ])

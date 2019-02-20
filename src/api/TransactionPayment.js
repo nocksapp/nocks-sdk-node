@@ -1,6 +1,7 @@
 const { makeRequest, isValidRequiredString } = require('../helpers');
 const { ValidationError } = require('./../errors');
 const PaymentTransformer = require('./transformers/Payment');
+const PaymentRefundTransformer = require('./transformers/PaymentRefund');
 const constants = require('./../constants');
 
 module.exports = (config) => {
@@ -74,9 +75,33 @@ module.exports = (config) => {
     });
   };
 
+  /**
+   * Refund a payment
+   *
+   * @param uuid
+   * @param data
+   */
+  const refund = ({ uuid }, data) => {
+    // Uuid is required
+    if (!isValidRequiredString(uuid)) {
+      return Promise.reject(new ValidationError('Cannot refund a payment without "uuid"', constants.errors.INVALID_UUID));
+    }
+
+    return makeRequest({
+      ...config.request,
+      method: 'POST',
+      baseURL: config.baseUrl,
+      url: `/payment/${uuid}/refund`,
+      accessToken: config.accessToken,
+      data: PaymentRefundTransformer.reverseTransform(data, { prepareForRequest: true }),
+    })
+      .then((response) => PaymentRefundTransformer.transform(response.data));
+  };
+
   return {
     create,
     findOne,
     cancel,
+    refund,
   };
 };

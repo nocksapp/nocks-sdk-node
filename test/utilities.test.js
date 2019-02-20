@@ -31,6 +31,7 @@ describe('stringToFloat', () => {
     expect(stringToFloat(undefined)).to.be.equal(0);
     expect(stringToFloat(null, -1)).to.be.equal(-1);
     expect(stringToFloat('0.06382599')).to.be.equal(0.06382599);
+    expect(stringToFloat('1800')).to.be.equal(1800);
   });
 });
 
@@ -40,5 +41,6 @@ describe('floatToString', () => {
     expect(floatToString(0.06382599, 2)).to.be.equal('0.06');
     expect(floatToString(0.06382599, 4)).to.be.equal('0.0638');
     expect(floatToString(0.06382599, 6)).to.be.equal('0.063826');
+    expect(floatToString(1800, 0)).to.be.equal('1800');
   });
 });

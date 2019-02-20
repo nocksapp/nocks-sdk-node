@@ -2,5 +2,5 @@ const NocksApi = require('../../src/api');
 
 module.exports = NocksApi.scope({
   platform: 'sandbox',
-  accessToken: '123',
+  accessToken: 'your_access_token',
 });

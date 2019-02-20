@@ -2,6 +2,8 @@ const DateTransformer = require('./Date');
 const AmountTransformer = require('./Amount');
 const PaymentTransformer = require('./Payment');
 const StatusTransitionTransformer = require('./StatusTransition');
+const MerchantClearingDistributionTransformer = require('./MerchantClearingDistribution');
+const PaymentMethodTransformer = require('./PaymentMethod');
 const constants = require('./../../constants');
 
 /**
@@ -18,11 +20,17 @@ const transform = (transaction) => AmountTransformer.transform(DateTransformer.t
   isExpired: () => transaction.status === constants.transaction.EXPIRED,
   isRefunded: () => transaction.status === constants.transaction.REFUNDED,
 
-  // Transform transaction payments and status transitions
   payments: transaction.payments && transaction.payments.data ?
     transaction.payments.data.map(PaymentTransformer.transform) : undefined,
+
   status_transitions: transaction.status_transitions && transaction.status_transitions.data ?
     transaction.status_transitions.data.map(StatusTransitionTransformer.transform) : undefined,
+
+  clearing_distribution: transaction.clearing_distribution && transaction.clearing_distribution.data ?
+    transaction.clearing_distribution.data.map(MerchantClearingDistributionTransformer.transform) : undefined,
+
+  payment_method: transaction.payment_method && transaction.payment_method.data ?
+    PaymentMethodTransformer.transform(transaction.payment_method.data) : undefined,
 })));
 
 /**
@@ -34,7 +42,6 @@ const transform = (transaction) => AmountTransformer.transform(DateTransformer.t
 const reverseTransform = (transaction, { prepareForRequest = false } = {}) => {
   const reverseObject = {};
 
-  // Reverse transform transaction payments and status transitions
   if (transaction.payments && !prepareForRequest) {
     reverseObject.payments = {
       data: transaction.payments.map((payment) => PaymentTransformer.reverseTransform(payment, { prepareForRequest })),
@@ -44,6 +51,18 @@ const reverseTransform = (transaction, { prepareForRequest = false } = {}) => {
   if (transaction.status_transitions && !prepareForRequest) {
     reverseObject.status_transitions = {
       data: transaction.status_transitions.map(StatusTransitionTransformer.reverseTransform),
+    };
+  }
+
+  if (transaction.clearing_distribution && !prepareForRequest) {
+    reverseObject.clearing_distribution = {
+      data: transaction.clearing_distribution.map(MerchantClearingDistributionTransformer.reverseTransform),
+    };
+  }
+
+  if (transaction.payment_method && !prepareForRequest) {
+    reverseObject.payment_method = {
+      data: PaymentMethodTransformer.reverseTransform(transaction.payment_method),
     };
   }
 

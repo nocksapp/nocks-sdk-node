@@ -1,10 +1,14 @@
 const AmountTransformer = require('./Amount');
 const UserTransformer = require('./User');
 const MerchantTransformer = require('./Merchant');
+const PaymentMethodTransformer = require('./PaymentMethod');
 
 const transformCurrency = (currency) => AmountTransformer.transform(Object.assign({}, currency, {
-  deposit_payment_methods: currency.deposit_payment_methods.data,
-  withdrawal_payment_methods: currency.withdrawal_payment_methods.data,
+  deposit_payment_methods: currency.deposit_payment_methods && currency.deposit_payment_methods.data ?
+    currency.deposit_payment_methods.data.map(PaymentMethodTransformer.transform) : undefined,
+
+  withdrawal_payment_methods: currency.withdrawal_payment_methods && currency.withdrawal_payment_methods.data ?
+    currency.withdrawal_payment_methods.data.map(PaymentMethodTransformer.transform) : undefined,
 }));
 
 /**
@@ -28,7 +32,7 @@ const transform = (balance, config) => AmountTransformer.transform(Object.assign
 const reverseTransform = (balance, { prepareForRequest = false } = {}) => {
   const reverseObject = {};
 
-  // Merchant profiles
+  // Currency
   if (balance.currency && !prepareForRequest) {
     reverseObject.currency = {
       data: AmountTransformer.reverseTransform(balance.currency),
