@@ -2,12 +2,12 @@ const { ValidationError } = require('./../errors');
 const { makeRequest, isValidRequiredString } = require('../helpers');
 const { positiveInteger } = require('./../utilities');
 const PaginationTransformer = require('./transformers/Pagination');
-const AddressTransformer = require('./transformers/Address');
+const NotificationFilterTransformer = require('./transformers/NotificationFilter');
 const constants = require('./../constants');
 
 module.exports = (config) => {
   /**
-   * Create a new address
+   * Create a new notification-filter
    *
    * @param data
    */
@@ -15,50 +15,50 @@ module.exports = (config) => {
     ...config.request,
     method: 'POST',
     baseURL: config.baseUrl,
-    url: '/address',
+    url: '/notification-filter',
     accessToken: config.accessToken,
-    data: AddressTransformer.reverseTransform(data, { prepareForRequest: true }),
+    data: NotificationFilterTransformer.reverseTransform(data, { prepareForRequest: true }),
   })
-    .then((response) => AddressTransformer.transform(response.data));
+    .then((response) => NotificationFilterTransformer.transform(response.data));
 
   /**
-   * Get addresses
+   * Get notification filters
    *
    * @param page
    */
   const find = ({ page = 1 } = {}) => makeRequest({
     ...config.request,
     baseURL: config.baseUrl,
-    url: `/address?page=${positiveInteger(page, 1)}`,
+    url: `/notification-filter?page=${positiveInteger(page, 1)}`,
     accessToken: config.accessToken,
   })
     .then((response) => ({
-      data: response.data.map(AddressTransformer.transform),
+      data: response.data.map(NotificationFilterTransformer.transform),
       pagination: PaginationTransformer.transform(response.meta.pagination),
     }));
 
   /**
-   * Get a single address
+   * Get a single notification-filter
    *
    * @param uuid
    */
   const findOne = ({ uuid }) => {
     // Uuid is required
     if (!isValidRequiredString(uuid)) {
-      return Promise.reject(new ValidationError('Cannot get an address without "uuid"', constants.errors.INVALID_UUID));
+      return Promise.reject(new ValidationError('Cannot get a notification-filter without "uuid"', constants.errors.INVALID_UUID));
     }
 
     return makeRequest({
       ...config.request,
       baseURL: config.baseUrl,
-      url: `/address/${uuid}`,
+      url: `/notification-filter/${uuid}`,
       accessToken: config.accessToken,
     })
-      .then((response) => AddressTransformer.transform(response.data));
+      .then((response) => NotificationFilterTransformer.transform(response.data));
   };
 
   /**
-   * Update an address
+   * Update a notification-filter
    *
    * @param uuid
    * @param data
@@ -66,36 +66,36 @@ module.exports = (config) => {
   const update = ({ uuid }, data) => {
     // Uuid is required
     if (!isValidRequiredString(uuid)) {
-      return Promise.reject(new ValidationError('Cannot update an address without "uuid"', constants.errors.INVALID_UUID));
+      return Promise.reject(new ValidationError('Cannot update a notification-filter without "uuid"', constants.errors.INVALID_UUID));
     }
 
     return makeRequest({
       ...config.request,
       method: 'PUT',
       baseURL: config.baseUrl,
-      url: `/address/${uuid}`,
+      url: `/notification-filter/${uuid}`,
       accessToken: config.accessToken,
-      data: AddressTransformer.reverseTransform(data, { prepareForRequest: true }),
+      data: NotificationFilterTransformer.reverseTransform(data, { prepareForRequest: true }),
     })
-      .then((response) => AddressTransformer.transform(response.data));
+      .then((response) => NotificationFilterTransformer.transform(response.data));
   };
 
   /**
-   * Delete an address
+   * Delete a notification-filter
    *
    * @param uuid
    */
   const remove = ({ uuid }) => {
     // Uuid is required
     if (!isValidRequiredString(uuid)) {
-      return Promise.reject(new ValidationError('Cannot delete an address without "uuid"', constants.errors.INVALID_UUID));
+      return Promise.reject(new ValidationError('Cannot delete a notification-filter without "uuid"', constants.errors.INVALID_UUID));
     }
 
     return makeRequest({
       ...config.request,
       method: 'DELETE',
       baseURL: config.baseUrl,
-      url: `/address/${uuid}`,
+      url: `/notification-filter/${uuid}`,
       accessToken: config.accessToken,
     });
   };

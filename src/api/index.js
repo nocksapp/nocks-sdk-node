@@ -12,6 +12,7 @@ const Merchant = require('./Merchant');
 const MerchantClearing = require('./MerchantClearing');
 const MerchantInvoice = require('./MerchantInvoice');
 const MerchantProfile = require('./MerchantProfile');
+const NotificationFilter = require('./NotificationFilter');
 const PaymentAddress = require('./PaymentAddress');
 const Raw = require('./Raw');
 const Setting = require('./Setting');
@@ -55,6 +56,7 @@ const scope = ({ platform = constants.platform.PRODUCTION.name, accessToken = nu
     merchantClearing: MerchantClearing(apiConfig),
     merchantInvoice: MerchantInvoice(apiConfig),
     merchantProfile: MerchantProfile(apiConfig),
+    notificationFilter: NotificationFilter(apiConfig),
     paymentAddress: PaymentAddress(apiConfig),
     raw: Raw(apiConfig),
     setting: Setting(apiConfig),
