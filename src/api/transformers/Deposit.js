@@ -32,7 +32,9 @@ const reverseTransform = (deposit, { prepareForRequest = false } = {}) => {
     };
   }
 
-  return AmountTransformer.reverseTransform(DateTransformer.reverseTransform(Object.assign({}, deposit, reverseObject)));
+  return AmountTransformer.reverseTransform(
+    DateTransformer.reverseTransform(Object.assign({}, deposit, reverseObject), { prepareForRequest })
+  );
 };
 
 module.exports = {

@@ -16,11 +16,10 @@ const transform = (fundingSource) => AmountTransformer.transform(
  * Reverse transform fundingSource
  *
  * @param fundingSource
+ * @param prepareForRequest
  */
-const reverseTransform = (fundingSource) => AmountTransformer.reverseTransform(
-  DateTransformer.reverseTransform(
-    Object.assign({}, fundingSource)
-  )
+const reverseTransform = (fundingSource, { prepareForRequest = false } = {}) => AmountTransformer.reverseTransform(
+  DateTransformer.reverseTransform(Object.assign({}, fundingSource), { prepareForRequest })
 );
 
 module.exports = {

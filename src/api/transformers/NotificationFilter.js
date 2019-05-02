@@ -11,8 +11,10 @@ const transform = (notificationFilter) => DateTransformer.transform(Object.assig
  * Reverse back to a "Nocks API" notificationFilter
  *
  * @param notificationFilter
+ * @param prepareForRequest
  */
-const reverseTransform = (notificationFilter) => DateTransformer.reverseTransform(Object.assign({}, notificationFilter));
+const reverseTransform = (notificationFilter, { prepareForRequest = false } = {}) =>
+  DateTransformer.reverseTransform(Object.assign({}, notificationFilter), { prepareForRequest });
 
 module.exports = {
   transform,

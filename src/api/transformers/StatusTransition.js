@@ -11,9 +11,11 @@ const transform = (statusTransition) => DateTransformer.transform(Object.assign(
  * Reverse transform statusTransition
  *
  * @param statusTransition
+ * @param prepareForRequest
  * @returns {*}
  */
-const reverseTransform = (statusTransition) => DateTransformer.reverseTransform(Object.assign({}, statusTransition));
+const reverseTransform = (statusTransition, { prepareForRequest = false } = {}) =>
+  DateTransformer.reverseTransform(Object.assign({}, statusTransition), { prepareForRequest });
 
 module.exports = {
   transform,

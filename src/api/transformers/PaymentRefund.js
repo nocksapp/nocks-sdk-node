@@ -28,7 +28,10 @@ const reverseTransform = (paymentRefund, { prepareForRequest = false } = {}) => 
     };
   }
 
-  return DateTransformer.reverseTransform(AmountTransformer.reverseTransform(Object.assign({}, paymentRefund, reverseObject)));
+  return DateTransformer.reverseTransform(
+    AmountTransformer.reverseTransform(Object.assign({}, paymentRefund, reverseObject)),
+    { prepareForRequest }
+  );
 };
 
 module.exports = {

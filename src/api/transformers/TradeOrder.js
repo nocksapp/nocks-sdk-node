@@ -18,11 +18,10 @@ const transform = (tradeOrder) => AmountTransformer.transform(DateTransformer.tr
  * Reverse transform tradeOrder
  *
  * @param tradeOrder
+ * @param prepareForRequest
  */
-const reverseTransform = (tradeOrder) => AmountTransformer.reverseTransform(
-  DateTransformer.reverseTransform(
-    Object.assign({}, tradeOrder)
-  )
+const reverseTransform = (tradeOrder, { prepareForRequest = false } = {}) => AmountTransformer.reverseTransform(
+  DateTransformer.reverseTransform(Object.assign({}, tradeOrder), { prepareForRequest }),
 );
 
 module.exports = {

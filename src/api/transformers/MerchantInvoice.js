@@ -36,9 +36,7 @@ const reverseTransform = (merchantInvoice, { prepareForRequest = false } = {}) =
   }
 
   return AmountTransformer.reverseTransform(
-    DateTransformer.reverseTransform(
-      Object.assign({}, merchantInvoice, reverseObject)
-    )
+    DateTransformer.reverseTransform(Object.assign({}, merchantInvoice, reverseObject), { prepareForRequest })
   );
 };
 

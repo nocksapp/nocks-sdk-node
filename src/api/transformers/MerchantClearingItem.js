@@ -18,11 +18,11 @@ const transform = (merchantClearingItem) => DateTransformer.transform(AmountTran
  * Reverse transform
  *
  * @param merchantClearingItem
+ * @param prepareForRequest
  */
-const reverseTransform = (merchantClearingItem) => DateTransformer.reverseTransform(
-  AmountTransformer.reverseTransform(
-    Object.assign({}, merchantClearingItem)
-  )
+const reverseTransform = (merchantClearingItem, { prepareForRequest = false } = {}) => DateTransformer.reverseTransform(
+  AmountTransformer.reverseTransform(Object.assign({}, merchantClearingItem)),
+  { prepareForRequest }
 );
 
 module.exports = {

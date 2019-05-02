@@ -36,7 +36,10 @@ const reverseTransform = (merchantClearing, { prepareForRequest = false } = {}) 
     };
   }
 
-  return DateTransformer.reverseTransform(AmountTransformer.reverseTransform(Object.assign({}, merchantClearing, reverseObject)));
+  return DateTransformer.reverseTransform(
+    AmountTransformer.reverseTransform(Object.assign({}, merchantClearing, reverseObject)),
+    { prepareForRequest }
+  );
 };
 
 module.exports = {
