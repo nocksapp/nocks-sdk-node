@@ -33,7 +33,9 @@ const reverseTransform = (withdrawal, { prepareForRequest = false } = {}) => {
     };
   }
 
-  return AmountTransformer.reverseTransform(DateTransformer.reverseTransform(Object.assign({}, withdrawal, reverseObject)));
+  return AmountTransformer.reverseTransform(
+    DateTransformer.reverseTransform(Object.assign({}, withdrawal, reverseObject), { prepareForRequest })
+  );
 };
 
 module.exports = {

@@ -11,8 +11,10 @@ const transform = (address) => DateTransformer.transform(Object.assign({}, addre
  * Reverse back to a "Nocks API" address
  *
  * @param address
+ * @param prepareForRequest
  */
-const reverseTransform = (address) => DateTransformer.reverseTransform(Object.assign({}, address));
+const reverseTransform = (address, { prepareForRequest = false } = {}) =>
+  DateTransformer.reverseTransform(Object.assign({}, address), { prepareForRequest });
 
 module.exports = {
   transform,

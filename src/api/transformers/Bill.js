@@ -27,7 +27,9 @@ const reverseTransform = (bill, { prepareForRequest = false } = {}) => {
     };
   }
 
-  return AmountTransformer.reverseTransform(DateTransformer.reverseTransform(Object.assign({}, bill, reverseObject)));
+  return AmountTransformer.reverseTransform(
+    DateTransformer.reverseTransform(Object.assign({}, bill, reverseObject), { prepareForRequest })
+  );
 };
 
 module.exports = {

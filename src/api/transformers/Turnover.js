@@ -26,13 +26,10 @@ const reverseTransform = (turnover, { prepareForRequest = false } = {}) => {
   const copy = Object.assign({}, turnover);
 
   if (turnover.period) {
-    copy.period = DateTransformer.reverseTransform(copy.period);
+    copy.period = DateTransformer.reverseTransform(copy.period, { prepareForRequest });
   }
 
-  return DateTransformer.reverseTransform(
-    AmountTransformer.reverseTransform(copy)
-    , { prepareForRequest },
-  );
+  return DateTransformer.reverseTransform(AmountTransformer.reverseTransform(copy), { prepareForRequest });
 };
 
 module.exports = {

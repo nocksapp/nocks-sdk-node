@@ -65,7 +65,7 @@ const reverseTransform = (merchant, { prepareForRequest = false } = {}) => {
     };
   }
 
-  return DateTransformer.reverseTransform(Object.assign({}, merchant, reverseObject));
+  return DateTransformer.reverseTransform(Object.assign({}, merchant, reverseObject), { prepareForRequest });
 };
 
 module.exports = {
