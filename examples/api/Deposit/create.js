@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.deposit.create({
+return context.deposit.create({
   currency: 'NLG',
 })
   .then((deposit) => {

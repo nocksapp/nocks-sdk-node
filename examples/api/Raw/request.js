@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.raw.request({
+return context.raw.request({
   method: 'GET',
   url: '/trade-market',
 })

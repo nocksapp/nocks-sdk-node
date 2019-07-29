@@ -1,8 +1,8 @@
-const scope = require('../scope');
+const context = require('../context');
 
 const merchant = { uuid: 'c2f04749-2088-4419-9b92-c0aab80287f2' };
 
-return scope.merchantInvoice.findOne(merchant, { uuid: 'b74adcd5-5c52-42b2-b3a3-bc40c5a7fbe7' })
+return context.merchantInvoice.findOne(merchant, { uuid: 'b74adcd5-5c52-42b2-b3a3-bc40c5a7fbe7' })
   .then((merchantInvoice) => {
     console.log(merchantInvoice);
 

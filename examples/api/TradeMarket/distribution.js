@@ -1,9 +1,9 @@
 /**
- * Note: tradeMarket.distribution is a public resource and therefore the scope doesn't need a accessToken
+ * Note: tradeMarket.distribution is a public resource and therefore the context doesn't need a accessToken
  */
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.tradeMarket.distribution({ code: 'NLG-EUR', positions: 20 })
+return context.tradeMarket.distribution({ code: 'NLG-EUR', positions: 20 })
   .then((distribution) => {
     console.log(distribution);
   });

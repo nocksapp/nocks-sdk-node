@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.setting.get()
+return context.setting.get()
   .then((settings) => {
     console.log(settings.currencies);
     console.log(settings.payment_methods);

@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.bill.create({
+return context.bill.create({
   type: 'receive',
   name: 'John Do',
   frequence: 'now',

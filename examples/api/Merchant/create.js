@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.merchant.create({
+return context.merchant.create({
   name: 'Nocks B.V.',
   email: 'support@nocks.co',
   website: 'https://nocks.co',

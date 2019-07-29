@@ -10,14 +10,14 @@ Installation requires no more than just a simple install of the npm package with
 `npm install nocks-sdk-node --save`
 
 ## Getting Started
-The `SDK` supports both the calls to the Nocks `api` endpoints (`api scope`) as well to the `oauth` endpoints (`oauth scope`). All `oauth` calls can directly be used from the `oauth scope`. The `api` calls are divided at `resource level` in the `api scope` (e.g. `scope.user.findAuthenticated`).
+The `SDK` supports both the calls to the Nocks `api` endpoints (`api context`) as well to the `oauth` endpoints (`oauth context`). All `oauth` calls can directly be used from the `oauth context`. The `api` calls are divided at `resource level` in the `api context` (e.g. `api.user.findAuthenticated`).
 
-Each call will return a [javascript native promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises), which is resolved with the result or rejected with an [error](#errors). With an exception of the `getOauthUri` call in the `oauth` scope, this will return the result directly (or throw an error) instead of a promise.
+Each call will return a [javascript native promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises), which is resolved with the result or rejected with an [error](#errors). With an exception of the `getOauthUri` call in the `oauth` context, this will return the result directly (or throw an error) instead of a promise.
 
 For the most calls  [authentication](https://docs.nocks.com/#authentication) is required. Checkout the [docs](https://docs.nocks.com/) to see what is required for every call.
 
 ### Oauth
-The `oauth` scope provides the following methods:
+The `oauth` context provides the following methods:
 
 * getOauthUri (`will not return a promise`)
 * requestToken
@@ -31,7 +31,7 @@ The `oauth` scope provides the following methods:
 // es6
 import NocksOauth from 'nocks-sdk-node/oauth';
 
-const scope = NocksOauth.scope({
+const oauth = NocksOauth.context({
     platform: 'production', // Use sandbox for testing
     scopes: ['user.read', 'user.update'],
     clientId: '1',
@@ -40,12 +40,12 @@ const scope = NocksOauth.scope({
 });
 
 // Use the oauth methods. For more, check examples
-const oauthUri = scope.getOauthUri();
+const oauthUri = oauth.getOauthUri();
 
 // At Nocks oauth redirect
 const code = 'code_from_nocks_oauth_redirect';
 
-return scope.requestToken({ code })
+return oauth.requestToken({ code })
     .then(({ access_token, refresh_token, expires_on }) => {
         // Do something
     });
@@ -54,19 +54,19 @@ return scope.requestToken({ code })
 Please checkout the [oauth docs](https://docs.nocks.com/#oauth-applications) and [examples](#examples) to see how the `oauth` methods can be used.
 
 ### API
-The `api` scope provides all the `Nocks` resources. Please checkout the [resources docs](https://docs.nocks.com/#public-resources) and [examples](#examples).
+The `api` context provides all the `Nocks` resources. Please checkout the [resources docs](https://docs.nocks.com/#public-resources) and [examples](#examples).
 
 ```javascript
 // es6
 import NocksApi from 'nocks-sdk-node/api';
 
-const scope = NocksApi.scope({
+const api = NocksApi.context({
     platform: 'production', // Use sandbox for testing
     accessToken: 'user_access_token',
 });
 
 // Use the api methods. For more, check examples
-return scope.user.findAuthenticated()
+return api.user.findAuthenticated()
     .then((user) => {
         // Do something with the user
     });
@@ -148,12 +148,12 @@ Example call with `pagination`:
 // es6
 import NocksApi from 'nocks-sdk-node/api';
 
-const scope = NocksApi.scope({
+const api = NocksApi.context({
     platform: 'production',
     accessToken: 'user_access_token',
 });
 
-return scope.transaction.find()
+return api.transaction.find()
     .then(({ pagination, data }) => {
         // use pagination object (e.g. pagination.hasNext())
         // data is an array with the found transactions
@@ -162,23 +162,23 @@ return scope.transaction.find()
 
 ### Errors
 
-The SDK uses three types of errors: `ConfigurationError`, `ValidationError` and `ResponseError`. (These types can be imported from `nocks-sdk-node/errors`).
+The SDK uses two types of errors: `ConfigurationError` and `ValidationError`. (These types can be imported from `nocks-sdk-node/errors`).
 
 ```javascript
 // es6
-import { ConfigurationError, ValidationError, ResponseError } from 'nocks-sdk-node/errors';
+import { ConfigurationError, ValidationError } from 'nocks-sdk-node/errors';
 ```
 
 #### Configuration Errors
-A `ConfigurationError` may occur when calling `.scope` or doing any other call inside the `oauth` or `api` scope. The `ConfigurationError` simply means that there is something wrong with your `.scope` configuration. Each `ConfigurationError` will have a clear message with what is wrong.
+A `ConfigurationError` may occur when calling `.context` or doing any other call inside the `oauth` or `api` context. The `ConfigurationError` simply means that there is something wrong with your `.context` configuration. Each `ConfigurationError` will have a clear message with what is wrong.
 
 #### Validation Errors
 A `ValidationError` will occur when trying to make a call to `Nocks` but there is something wrong with the parameters you provided to the method call. Each `ValidationError` will have a clear message with what is wrong.
 
-`Note that the SDK doesn't check your request data that is send to the api, if there is something wrong with your data the api call will be rejected with a ResponseError`
+`Note that the SDK doesn't check your request data that is send to the api, if there is something wrong with your data the api call will be rejected with a js error`
 
 #### Response Errors
-A `ResponseError` will occur when a call to `Nocks` fails. The `ResponseError` will always contain the following data: `status`, `message` and `code`. For example:
+When a call to `Nocks` fails the promise will be rejected with a regular js error. This error may contain a `status` and a `code` property. For example:
 
 ```javascript
 {

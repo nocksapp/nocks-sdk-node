@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.withdrawal.create({
+return context.withdrawal.create({
   currency: 'NLG',
   amount: 100.00,
   address: 'TF7LzGAcCxYxoFjfJwxswua24s9wsMpwY8',

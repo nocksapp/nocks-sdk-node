@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.bill.update({ uuid: '8e7acf1a-2f76-47ff-8c9d-d1b5b2e5de3f' }, {
+return context.bill.update({ uuid: '8e7acf1a-2f76-47ff-8c9d-d1b5b2e5de3f' }, {
   amount: {
     currency: 'EUR',
     value: 30,

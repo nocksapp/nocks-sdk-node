@@ -1,4 +1,4 @@
-const scope = require('./scope');
+const context = require('./context');
 
 // Note: getOauthUri is not making a request to Nocks and doesn't return a promise. May throw an error however.
-console.log(scope.getOauthUri({ state: 'state_string' }));
+console.log(context.getOauthUri({ state: 'state_string' }));

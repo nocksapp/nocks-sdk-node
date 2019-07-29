@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.balance.findOne({ currency: 'NLG' })
+return context.balance.findOne({ currency: 'NLG' })
   .then((balance) => {
     console.log(balance);
 

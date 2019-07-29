@@ -1,9 +1,9 @@
 /**
- * Note: transaction.quote is a public resource and therefore the scope doesn't need a accessToken
+ * Note: transaction.quote is a public resource and therefore the context doesn't need a accessToken
  */
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.transaction.quote({
+return context.transaction.quote({
   source_currency: 'EUR',
   target_currency: 'NLG',
   amount: {

@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.tradeOrder.findOne({ uuid: '9db8db25-3b38-4516-9bde-809bbe312df8' })
+return context.tradeOrder.findOne({ uuid: '9db8db25-3b38-4516-9bde-809bbe312df8' })
   .then((tradeOrder) => {
     console.log(tradeOrder);
     console.log(tradeOrder.amount.value);

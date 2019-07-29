@@ -15,7 +15,7 @@ const Oauth = proxyquire('../../src/oauth', {
 });
 
 const expect = chai.expect;
-const validScope = {
+const validContext = {
   clientId: '1',
   scopes: ['user.read'],
   redirectUri: 'https://www.example.com',
@@ -26,57 +26,57 @@ afterEach(() => {
   stub.reset();
 });
 
-describe('scope', () => {
+describe('context', () => {
   it('should throw an error when an invalid platform is given', () => {
     const message = '"platform" must be one of: "production, sandbox"';
 
-    expect(() => Oauth.scope({ platform: 'invalid_platform' })).to.throw(message);
+    expect(() => Oauth.context({ platform: 'invalid_platform' })).to.throw(message);
 
-    expect(() => Oauth.scope({ platform: 'sandbox', clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
-    expect(() => Oauth.scope({ platform: 'production', clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
+    expect(() => Oauth.context({ platform: 'sandbox', clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
+    expect(() => Oauth.context({ platform: 'production', clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
   });
 
   it('should throw an error when no (valid) clientId is given', () => {
     const message = 'Invalid "clientId", must be a (not-empty) string or null';
 
-    expect(() => Oauth.scope({ clientId: '', scopes: ['user.read'], redirectUri: 'test' })).to.throw(message);
-    expect(() => Oauth.scope({ clientId: '  ', scopes: ['user.read'], redirectUri: 'test' })).to.throw(message);
+    expect(() => Oauth.context({ clientId: '', scopes: ['user.read'], redirectUri: 'test' })).to.throw(message);
+    expect(() => Oauth.context({ clientId: '  ', scopes: ['user.read'], redirectUri: 'test' })).to.throw(message);
 
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
   });
 
   it('should throw an error when no (valid) scopes array is given', () => {
     const message = 'Invalid "scopes", must be an array with at least one element or null';
 
-    expect(() => Oauth.scope({ clientId: '1', scopes: '', redirectUri: 'test' })).to.throw(message);
-    expect(() => Oauth.scope({ clientId: '1', scopes: [], redirectUri: 'test' })).to.throw(message);
+    expect(() => Oauth.context({ clientId: '1', scopes: '', redirectUri: 'test' })).to.throw(message);
+    expect(() => Oauth.context({ clientId: '1', scopes: [], redirectUri: 'test' })).to.throw(message);
 
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
   });
 
   it('should throw an error when an invalid redirectUri is given', () => {
     const message = 'Invalid "redirectUri", must be a (not-empty) string or null';
 
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: '' })).to.throw(message);
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: '   ' })).to.throw(message);
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: '' })).to.throw(message);
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: '   ' })).to.throw(message);
 
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: null })).to.not.throw();
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: undefined })).to.not.throw();
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: null })).to.not.throw();
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: undefined })).to.not.throw();
   });
 
   it('should throw an error when an invalid clientSecret is given', () => {
     const message = 'Invalid "clientSecret", must be a (not-empty) string or null';
 
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: 'test', clientSecret: ' ' })).to.throw(message);
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: 'test', clientSecret: ' ' })).to.throw(message);
 
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: 'test', clientSecret: null })).to.not.throw();
-    expect(() => Oauth.scope({ clientId: '1', scopes: ['user.read'], redirectUri: 'test', clientSecret: undefined })).to.not.throw();
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: 'test' })).to.not.throw();
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: 'test', clientSecret: null })).to.not.throw();
+    expect(() => Oauth.context({ clientId: '1', scopes: ['user.read'], redirectUri: 'test', clientSecret: undefined })).to.not.throw();
   });
 
   it('should return the correct functions', () => {
-    expect(Oauth.scope(validScope)).to.have.all.keys([
+    expect(Oauth.context(validContext)).to.have.all.keys([
       'getOauthUri', 'requestToken', 'refreshToken', 'passwordGrantToken', 'scopes', 'tokenScopes'
     ]);
   });
@@ -84,13 +84,13 @@ describe('scope', () => {
   describe('getOauthUri', () => {
     it ('should return the oauth uri', () => {
       const expectedUri = 'https://www.nocks.com/oauth/authorize?client_id=1&redirect_uri=https://www.example.com&response_type=code&scope=user.read&state=state';
-      expect(Oauth.scope(validScope).getOauthUri({state: 'state'})).to.be.equal(expectedUri);
+      expect(Oauth.context(validContext).getOauthUri({state: 'state'})).to.be.equal(expectedUri);
     });
   });
 
   describe('requestToken', () => {
     it ('should reject when no clientSecret is given', (done) => {
-      const NocksOauth = Oauth.scope(Object.assign({}, validScope, { clientSecret: null }));
+      const NocksOauth = Oauth.context(Object.assign({}, validContext, { clientSecret: null }));
 
       NocksOauth.requestToken({ code: '123' })
         .then(() => {
@@ -104,7 +104,7 @@ describe('scope', () => {
     });
 
     it ('should reject when no redirectUri is given', (done) => {
-      const NocksOauth = Oauth.scope(Object.assign({}, validScope, { redirectUri: null }));
+      const NocksOauth = Oauth.context(Object.assign({}, validContext, { redirectUri: null }));
 
       NocksOauth.requestToken({ code: '123' })
         .then(() => {
@@ -118,7 +118,7 @@ describe('scope', () => {
     });
 
     it ('should reject when no (valid) code is given', (done) => {
-      const NocksOauth = Oauth.scope(validScope);
+      const NocksOauth = Oauth.context(validContext);
 
       NocksOauth.requestToken({})
         .then(() => {
@@ -134,7 +134,7 @@ describe('scope', () => {
     it ('should return the transformed response', (done) => {
       stub.returns(Promise.resolve(postTokenResponse));
 
-      const NocksOauth = Oauth.scope(validScope);
+      const NocksOauth = Oauth.context(validContext);
       NocksOauth.requestToken({ code: '123' })
         .then((result) => {
           expect(result).to.have.property('expires_on').to.be.a('date');
@@ -151,7 +151,7 @@ describe('scope', () => {
 
   describe('refreshToken', () => {
     it ('should reject when no clientSecret is given', (done) => {
-      const NocksOauth = Oauth.scope(Object.assign({}, validScope, { clientSecret: null }));
+      const NocksOauth = Oauth.context(Object.assign({}, validContext, { clientSecret: null }));
 
       NocksOauth.refreshToken({ refreshToken: 'super_secret' })
         .then(() => {
@@ -165,7 +165,7 @@ describe('scope', () => {
     });
 
     it ('should reject when no (valid) refreshToken is given', (done) => {
-      const NocksOauth = Oauth.scope(validScope);
+      const NocksOauth = Oauth.context(validContext);
 
       NocksOauth.refreshToken({})
         .then(() => {
@@ -181,7 +181,7 @@ describe('scope', () => {
     it ('should return the transformed response', (done) => {
       stub.returns(Promise.resolve(postRefreshTokenResponse));
 
-      const NocksOauth = Oauth.scope(validScope);
+      const NocksOauth = Oauth.context(validContext);
       NocksOauth.refreshToken({ refreshToken: 'super_secret' })
         .then((result) => {
           expect(result).to.have.property('expires_on').to.be.a('date');
@@ -198,7 +198,7 @@ describe('scope', () => {
 
   describe('passwordGrantToken', () => {
     it ('should reject when no clientSecret is given', (done) => {
-      const NocksOauth = Oauth.scope(Object.assign({}, validScope, { clientSecret: null }));
+      const NocksOauth = Oauth.context(Object.assign({}, validContext, { clientSecret: null }));
 
       NocksOauth.passwordGrantToken({ username: 'foo', password: 'bar' })
         .then(() => {
@@ -212,7 +212,7 @@ describe('scope', () => {
     });
 
     it ('should reject when no (valid) username is given', (done) => {
-      const NocksOauth = Oauth.scope(validScope);
+      const NocksOauth = Oauth.context(validContext);
 
       NocksOauth.passwordGrantToken({ password: 'bar' })
         .then(() => {
@@ -226,7 +226,7 @@ describe('scope', () => {
     });
 
     it ('should reject when no (valid) password is given', (done) => {
-      const NocksOauth = Oauth.scope(validScope);
+      const NocksOauth = Oauth.context(validContext);
 
       NocksOauth.passwordGrantToken({ username: 'foo' })
         .then(() => {
@@ -242,7 +242,7 @@ describe('scope', () => {
     it ('should return the transformed response', (done) => {
       stub.returns(Promise.resolve(postPasswordGrantTokenResponse));
 
-      const NocksOauth = Oauth.scope(validScope);
+      const NocksOauth = Oauth.context(validContext);
       NocksOauth.passwordGrantToken({ username: 'foo', password: 'bar' })
         .then((result) => {
           expect(result).to.have.property('expires_on').to.be.a('date');

@@ -1,6 +1,6 @@
 const NocksOauth = require('../../src/oauth');
 
-module.exports = NocksOauth.scope({
+module.exports = NocksOauth.context({
   platform: 'sandbox',
   clientId: '1',
   clientSecret: '1',

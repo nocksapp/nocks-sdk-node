@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.balance.create({
+return context.balance.create({
   type: 'trade-cash',
   currency: 'EUR',
 })

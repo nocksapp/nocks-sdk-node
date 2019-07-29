@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.notificationFilter.create({
+return context.notificationFilter.create({
   method: 'callback',
   target: 'https://nocks.com/callback',
   resources: ['user', 'balance'],

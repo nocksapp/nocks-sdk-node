@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.fundingSource.create({
+return context.fundingSource.create({
   number: 'TRt152vKGMdYUZCQutSxaHs8fYcbnmKTRM',
   currency: 'NLG',
 }, { twoFactorCode: '123456' })

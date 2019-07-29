@@ -1,9 +1,9 @@
 /**
- * Note: scopes is a public resource and therefore the scope doesn't need any configuration
+ * Note: scopes is a public resource and therefore the context doesn't need any configuration
  */
-const scope = require('./scope');
+const context = require('./context');
 
-return scope.scopes()
+return context.scopes()
   .then((scopes) => {
     console.log(scopes);
   });

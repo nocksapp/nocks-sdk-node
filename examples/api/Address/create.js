@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.address.create({
+return context.address.create({
   name: 'Nocks office',
   street1: 'van Lodensteinstraat 25',
   street2: 'Floor 3',

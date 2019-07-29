@@ -91,8 +91,9 @@ describe('makeRequest', () => {
   });
 
   it('should return the request error', (done) => {
-    const error = new Error('Error');
-    error.request = new Error('Request error');
+    const error = new Error('Request error');
+    error.config = { method: 'post', url: 'test' };
+    error.request = {};
     stub.returns(Promise.reject(error));
 
     Request.makeRequest({})
@@ -101,7 +102,7 @@ describe('makeRequest', () => {
       })
       .catch((err) => {
         sinon.assert.calledOnce(stub);
-        expect(err.message).to.be.equal('Request error');
+        expect(err.message).to.be.equal('No response received from the "post" request to test. Message: "Request error"');
         done();
       });
   });

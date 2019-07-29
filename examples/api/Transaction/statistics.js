@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.transaction.statistics()
+return context.transaction.statistics()
   .then((statistics) => {
     console.log(statistics);
   });

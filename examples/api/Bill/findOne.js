@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.bill.findOne({ uuid: '8e7acf1a-2f76-47ff-8c9d-d1b5b2e5de3f' })
+return context.bill.findOne({ uuid: '8e7acf1a-2f76-47ff-8c9d-d1b5b2e5de3f' })
   .then((bill) => {
     console.log(bill);
     console.log(bill.amount.value);

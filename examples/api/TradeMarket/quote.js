@@ -1,9 +1,9 @@
 /**
- * Note: tradeMarket.quote is a public resource and therefore the scope doesn't need a accessToken
+ * Note: tradeMarket.quote is a public resource and therefore the context doesn't need a accessToken
  */
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.tradeMarket.quote({ code: 'NLG-EUR', side: 'buy', amount: 100, amountType: 'cost' })
+return context.tradeMarket.quote({ code: 'NLG-EUR', side: 'buy', amount: 100, amountType: 'cost' })
   .then((quote) => {
     console.log(quote);
   });

@@ -30,7 +30,7 @@ const Withdrawal = require('./Withdrawal');
  * @param accessToken - Not required for public resources
  * @param config - Additional config
  */
-const scope = ({ platform = constants.platform.PRODUCTION.name, accessToken = null } = {}, config = {}) => {
+const context = ({ platform = constants.platform.PRODUCTION.name, accessToken = null } = {}, config = {}) => {
   const platforms = Object.values(constants.platform);
   const platformNames = platforms.map((x) => x.name);
 
@@ -70,5 +70,5 @@ const scope = ({ platform = constants.platform.PRODUCTION.name, accessToken = nu
 };
 
 module.exports = {
-  scope,
+  context,
 };

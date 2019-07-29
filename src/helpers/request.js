@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const { ResponseError, ConfigurationError, ValidationError } = require('./../errors');
+const { ConfigurationError, ValidationError } = require('./../errors');
 const constants = require('./../constants');
 const { isValidRequiredString } = require('./validation');
 
@@ -40,15 +40,23 @@ const makeRequest = (config, { callType = 'api' } = {}) => {
       if (err.response) {
         const { data } = err.response;
         if (callType === 'oauth') {
-          throw new ResponseError({ status: err.response.status, message: data.message, code: data.error });
+          const error = new Error(data.message);
+          error.status = err.response.status;
+          error.code = data.error;
+
+          throw error;
         }
 
-        throw new ResponseError({ status: data.status, message: data.error.message, code: data.error.code });
+        const error = new Error(data.error.message);
+        error.status = data.status;
+        error.code = data.error.code;
+
+        throw error;
       } else if (err.request) {
-        throw err.request;
+        throw new Error(`No response received from the "${err.config.method}" request to ${err.config.url}. Message: "${err.message}"`);
       }
 
-      throw err;
+      throw new Error(err.message);
     });
 };
 

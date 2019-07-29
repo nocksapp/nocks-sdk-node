@@ -1,3 +1,3 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.address.delete({ uuid: '7fa207d1-736c-469e-b9c2-6e8bc86481e1' });
+return context.address.delete({ uuid: '7fa207d1-736c-469e-b9c2-6e8bc86481e1' });

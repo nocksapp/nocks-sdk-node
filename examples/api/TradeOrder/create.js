@@ -1,9 +1,9 @@
-const scope = require('../scope');
+const context = require('../context');
 
 const expireAt = new Date();
 expireAt.setDate(expireAt.getDate() + 1);
 
-return scope.tradeOrder.create({
+return context.tradeOrder.create({
   'trade-market': 'NLG-EUR',
   amount: 100,
   side: 'sell',

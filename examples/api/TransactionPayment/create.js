@@ -1,8 +1,8 @@
-const scope = require('../scope');
+const context = require('../context');
 
 const transaction = { uuid: '1fa1ff60-4280-4f34-b0eb-2a0671b44b2e' };
 
-return scope.transactionPayment.create(transaction, {
+return context.transactionPayment.create(transaction, {
   amount: {
     value: 20,
     currency: 'NLG',

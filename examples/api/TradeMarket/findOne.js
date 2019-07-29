@@ -1,9 +1,9 @@
 /**
- * Note: tradeMarket.findOne is a public resource and therefore the scope doesn't need a accessToken
+ * Note: tradeMarket.findOne is a public resource and therefore the context doesn't need a accessToken
  */
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.tradeMarket.findOne({ code: 'NLG-EUR' })
+return context.tradeMarket.findOne({ code: 'NLG-EUR' })
   .then((tradeMarket) => {
     console.log(tradeMarket);
   });

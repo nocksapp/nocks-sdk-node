@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.transaction.findOne({ uuid: '741967d9-ed7b-413c-9a82-90c7069779f7' })
+return context.transaction.findOne({ uuid: '741967d9-ed7b-413c-9a82-90c7069779f7' })
   .then((transaction) => {
     console.log(transaction);
 

@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.paymentAddress.validateArray([
+return context.paymentAddress.validateArray([
   { currency: 'NLG', address: 'TRt152vKGMdYUZCQutSxaHs8fYcbnmKTRM' },
   { currency: 'EUR', address: 'NL16ABNA0602167736' },
 ])

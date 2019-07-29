@@ -26,7 +26,7 @@ const transformTokenResponse = (response) => {
  * @param redirectUri
  * @param config
  */
-const scope = ({
+const context = ({
   platform = constants.platform.PRODUCTION.name, clientId = null, clientSecret = null,
   scopes = null, redirectUri = null,
 }, config = {}) => {
@@ -230,5 +230,5 @@ const scope = ({
 };
 
 module.exports = {
-  scope,
+  context,
 };

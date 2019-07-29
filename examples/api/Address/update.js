@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.address.update({ uuid: '7fa207d1-736c-469e-b9c2-6e8bc86481e1' }, {
+return context.address.update({ uuid: '7fa207d1-736c-469e-b9c2-6e8bc86481e1' }, {
   name: 'Nocks office'
 })
   .then((address) => {

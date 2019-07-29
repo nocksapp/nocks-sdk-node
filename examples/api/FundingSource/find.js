@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.fundingSource.find({ page: 1 })
+return context.fundingSource.find({ page: 1 })
   .then(({ pagination, data }) => {
     console.log(pagination);
     console.log(data);

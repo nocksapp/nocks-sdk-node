@@ -1,9 +1,9 @@
 /**
- * Note: user.create is a public resource and therefore the scope doesn't need a accessToken
+ * Note: user.create is a public resource and therefore the context doesn't need a accessToken
  */
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.user.create({
+return context.user.create({
   gender: 'male',
   first_name: 'John',
   last_name: 'Doe',

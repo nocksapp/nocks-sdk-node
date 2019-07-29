@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.transaction.create({
+return context.transaction.create({
   source_currency: 'NLG',
   target_currency: 'NLG',
   target_address: 'TRt152vKGMdYUZCQutSxaHs8fYcbnmKTRM',

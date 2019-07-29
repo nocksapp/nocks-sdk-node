@@ -1,6 +1,6 @@
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.user.findAuthenticated()
+return context.user.findAuthenticated()
   .then((user) => {
     console.log(user);
     console.log(user.is_enabled_two_factor);

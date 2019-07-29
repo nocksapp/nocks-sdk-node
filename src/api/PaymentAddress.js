@@ -8,7 +8,7 @@ module.exports = (config) => {
     ...config.request,
     method: 'POST',
     baseURL: config.baseUrl,
-    url: '/address/validate',
+    url: '/address/validatee',
     data: {
       address,
       currency,

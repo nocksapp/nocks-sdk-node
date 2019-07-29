@@ -1,9 +1,9 @@
 /**
- * Note: tradeMarket.find is a public resource and therefore the scope doesn't need a accessToken
+ * Note: tradeMarket.find is a public resource and therefore the context doesn't need a accessToken
  */
-const scope = require('../scope');
+const context = require('../context');
 
-return scope.tradeMarket.find({ page: 1 })
+return context.tradeMarket.find({ page: 1 })
   .then(({ pagination, data }) => {
     console.log(pagination);
     console.log(data);
