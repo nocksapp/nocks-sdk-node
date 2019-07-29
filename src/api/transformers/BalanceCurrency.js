@@ -7,11 +7,11 @@ const PaymentMethodTransformer = require('./PaymentMethod');
  * @param currency
  */
 const transform = (currency) => AmountTransformer.transform(Object.assign({}, currency, {
-  deposit_payment_methods: currency.deposit_payment_methods && currency.deposit_payment_methods.data ?
-    currency.deposit_payment_methods.data.map(PaymentMethodTransformer.transform) : undefined,
+  deposit_payment_methods: currency.deposit_payment_methods && currency.deposit_payment_methods.data
+    ? currency.deposit_payment_methods.data.map(PaymentMethodTransformer.transform) : undefined,
 
-  withdrawal_payment_methods: currency.withdrawal_payment_methods && currency.withdrawal_payment_methods.data ?
-    currency.withdrawal_payment_methods.data.map(PaymentMethodTransformer.transform) : undefined,
+  withdrawal_payment_methods: currency.withdrawal_payment_methods && currency.withdrawal_payment_methods.data
+    ? currency.withdrawal_payment_methods.data.map(PaymentMethodTransformer.transform) : undefined,
 }));
 
 /**

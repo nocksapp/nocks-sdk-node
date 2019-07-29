@@ -8,8 +8,8 @@ const PaymentMethodTransformer = require('./PaymentMethod');
  * @param data
  */
 const transform = (data) => AmountTransformer.transform(DateTransformer.transform(Object.assign({}, data, {
-  payment_method: data.payment_method && data.payment_method.data ?
-    PaymentMethodTransformer.transform(data.payment_method.data) : undefined,
+  payment_method: data.payment_method && data.payment_method.data
+    ? PaymentMethodTransformer.transform(data.payment_method.data) : undefined,
 })));
 
 /**

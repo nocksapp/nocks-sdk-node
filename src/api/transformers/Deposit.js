@@ -12,8 +12,8 @@ const transform = (deposit) => AmountTransformer.transform(DateTransformer.trans
   // Add confirmed function
   isConfirmed: () => deposit.status === constants.deposit.CONFIRMED,
 
-  payment_method: deposit.payment_method && deposit.payment_method.data ?
-    PaymentMethodTransformer.transform(deposit.payment_method.data) : undefined,
+  payment_method: deposit.payment_method && deposit.payment_method.data
+    ? PaymentMethodTransformer.transform(deposit.payment_method.data) : undefined,
 })));
 
 /**

@@ -13,8 +13,9 @@ const transform = (notificationFilter) => DateTransformer.transform(Object.assig
  * @param notificationFilter
  * @param prepareForRequest
  */
-const reverseTransform = (notificationFilter, { prepareForRequest = false } = {}) =>
-  DateTransformer.reverseTransform(Object.assign({}, notificationFilter), { prepareForRequest });
+const reverseTransform = (notificationFilter, { prepareForRequest = false } = {}) => DateTransformer.reverseTransform(
+  Object.assign({}, notificationFilter), { prepareForRequest }
+);
 
 module.exports = {
   transform,

@@ -13,8 +13,9 @@ const transform = (address) => DateTransformer.transform(Object.assign({}, addre
  * @param address
  * @param prepareForRequest
  */
-const reverseTransform = (address, { prepareForRequest = false } = {}) =>
-  DateTransformer.reverseTransform(Object.assign({}, address), { prepareForRequest });
+const reverseTransform = (address, { prepareForRequest = false } = {}) => DateTransformer.reverseTransform(
+  Object.assign({}, address), { prepareForRequest }
+);
 
 module.exports = {
   transform,

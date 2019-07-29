@@ -13,8 +13,8 @@ const transform = (withdrawal) => AmountTransformer.transform(DateTransformer.tr
   isOpen: () => withdrawal.status === constants.withdrawal.OPEN,
   isCompleted: () => withdrawal.status === constants.withdrawal.COMPLETED,
 
-  payment_method: withdrawal.payment_method && withdrawal.payment_method.data ?
-    PaymentMethodTransformer.transform(withdrawal.payment_method.data) : undefined,
+  payment_method: withdrawal.payment_method && withdrawal.payment_method.data
+    ? PaymentMethodTransformer.transform(withdrawal.payment_method.data) : undefined,
 })));
 
 /**

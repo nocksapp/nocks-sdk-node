@@ -14,8 +14,9 @@ const transform = (merchantProfile) => DateTransformer.transform(Object.assign({
  * @param merchantProfile
  * @param prepareForRequest
  */
-const reverseTransform = (merchantProfile, { prepareForRequest = false } = {}) =>
-  DateTransformer.reverseTransform(Object.assign({}, merchantProfile), { prepareForRequest });
+const reverseTransform = (merchantProfile, { prepareForRequest = false } = {}) => DateTransformer.reverseTransform(
+  Object.assign({}, merchantProfile), { prepareForRequest }
+);
 
 module.exports = {
   transform,

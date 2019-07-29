@@ -10,8 +10,8 @@ const constants = require('./../../constants');
  */
 const transform = (merchantInvoice) => AmountTransformer.transform(DateTransformer.transform(Object.assign({}, merchantInvoice, {
   // Merchant invoice clearings
-  merchant_clearings: merchantInvoice.merchant_clearings && merchantInvoice.merchant_clearings.data ?
-    merchantInvoice.merchant_clearings.data.map(MerchantClearingTransformer.transform) : undefined,
+  merchant_clearings: merchantInvoice.merchant_clearings && merchantInvoice.merchant_clearings.data
+    ? merchantInvoice.merchant_clearings.data.map(MerchantClearingTransformer.transform) : undefined,
 
   // Add status functions
   isOpen: () => merchantInvoice.status === constants.merchantInvoice.OPEN,

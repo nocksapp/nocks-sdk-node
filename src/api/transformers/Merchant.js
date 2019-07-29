@@ -19,12 +19,12 @@ const transform = (merchant, config) => {
 
   return DateTransformer.transform(Object.assign({}, merchant, {
     // Merchant profiles
-    merchant_profiles: merchant.merchant_profiles && merchant.merchant_profiles.data ?
-      merchant.merchant_profiles.data.map(MerchantProfileTransformer.transform) : undefined,
+    merchant_profiles: merchant.merchant_profiles && merchant.merchant_profiles.data
+      ? merchant.merchant_profiles.data.map(MerchantProfileTransformer.transform) : undefined,
 
     // Merchant clearings
-    clearing_distribution: merchant.clearing_distribution && merchant.clearing_distribution.data ?
-      merchant.clearing_distribution.data.map(MerchantClearingDistributionTransformer.transform) : undefined,
+    clearing_distribution: merchant.clearing_distribution && merchant.clearing_distribution.data
+      ? merchant.clearing_distribution.data.map(MerchantClearingDistributionTransformer.transform) : undefined,
 
     // Clearing methods
     findClearing: ({ uuid }) => merchantClearing.findOne(merchant, { uuid }),

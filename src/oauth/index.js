@@ -78,9 +78,9 @@ const context = ({
         throw new ConfigurationError('Cannot setup an oauth uri without configured scopes');
       }
 
-      return encodeURI(`${oauthConfig.baseUrl}/authorize?client_id=${clientId}` +
-        `&redirect_uri=${redirectUri}&response_type=code&scope=${scopes.join(' ')}` +
-        `&state=${state}`);
+      return encodeURI(`${oauthConfig.baseUrl}/authorize?client_id=${clientId}`
+        + `&redirect_uri=${redirectUri}&response_type=code&scope=${scopes.join(' ')}`
+        + `&state=${state}`);
     },
 
     /**

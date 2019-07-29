@@ -20,17 +20,17 @@ const transform = (transaction) => AmountTransformer.transform(DateTransformer.t
   isExpired: () => transaction.status === constants.transaction.EXPIRED,
   isRefunded: () => transaction.status === constants.transaction.REFUNDED,
 
-  payments: transaction.payments && transaction.payments.data ?
-    transaction.payments.data.map(PaymentTransformer.transform) : undefined,
+  payments: transaction.payments && transaction.payments.data
+    ? transaction.payments.data.map(PaymentTransformer.transform) : undefined,
 
-  status_transitions: transaction.status_transitions && transaction.status_transitions.data ?
-    transaction.status_transitions.data.map(StatusTransitionTransformer.transform) : undefined,
+  status_transitions: transaction.status_transitions && transaction.status_transitions.data
+    ? transaction.status_transitions.data.map(StatusTransitionTransformer.transform) : undefined,
 
-  clearing_distribution: transaction.clearing_distribution && transaction.clearing_distribution.data ?
-    transaction.clearing_distribution.data.map(MerchantClearingDistributionTransformer.transform) : undefined,
+  clearing_distribution: transaction.clearing_distribution && transaction.clearing_distribution.data
+    ? transaction.clearing_distribution.data.map(MerchantClearingDistributionTransformer.transform) : undefined,
 
-  payment_method: transaction.payment_method && transaction.payment_method.data ?
-    PaymentMethodTransformer.transform(transaction.payment_method.data) : undefined,
+  payment_method: transaction.payment_method && transaction.payment_method.data
+    ? PaymentMethodTransformer.transform(transaction.payment_method.data) : undefined,
 })));
 
 /**

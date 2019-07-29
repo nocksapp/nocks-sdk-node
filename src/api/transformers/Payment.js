@@ -17,8 +17,8 @@ const transform = (payment) => DateTransformer.transform(AmountTransformer.trans
   isExpired: () => payment.status === constants.payment.EXPIRED,
   isRefunded: () => payment.status === constants.payment.REFUNDED,
 
-  payment_method: payment.payment_method && payment.payment_method.data ?
-    PaymentMethodTransformer.transform(payment.payment_method.data) : undefined,
+  payment_method: payment.payment_method && payment.payment_method.data
+    ? PaymentMethodTransformer.transform(payment.payment_method.data) : undefined,
 })));
 
 /**
