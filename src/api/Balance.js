@@ -3,7 +3,7 @@ const { ValidationError } = require('./../errors');
 const PaginationTransformer = require('./transformers/Pagination');
 const BalanceTransformer = require('./transformers/Balance');
 const BalanceTransferTransformer = require('./transformers/BalanceTransfer');
-const { positiveInteger } = require('./../utilities');
+const { positiveInteger, buildQueryString } = require('./../utilities');
 const constants = require('./../constants');
 
 module.exports = (config) => {
@@ -25,16 +25,24 @@ module.exports = (config) => {
   /**
    * Get balance
    */
-  const find = ({ page = 1 } = {}) => makeRequest({
-    ...config.request,
-    baseURL: config.baseUrl,
-    accessToken: config.accessToken,
-    url: `/balance?page=${positiveInteger(page, 1)}`,
-  })
-    .then((response) => ({
-      data: response.data.map((x) => BalanceTransformer.transform(x, config)),
-      pagination: PaginationTransformer.transform(response.meta.pagination),
-    }));
+  const find = ({ page = 1, type = null } = {}) => {
+    const query = { page: positiveInteger(page, 1) };
+
+    if (type !== null) {
+      query.type = type;
+    }
+
+    return makeRequest({
+      ...config.request,
+      baseURL: config.baseUrl,
+      accessToken: config.accessToken,
+      url: `/balance?${buildQueryString(query)}`,
+    })
+      .then((response) => ({
+        data: response.data.map((x) => BalanceTransformer.transform(x, config)),
+        pagination: PaginationTransformer.transform(response.meta.pagination),
+      }));
+  };
 
   /**
    * Get balance
