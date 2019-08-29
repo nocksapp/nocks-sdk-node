@@ -128,7 +128,13 @@ module.exports = (config) => {
       baseURL: config.baseUrl,
       url,
     })
-      .then((response) => response.data.map(TradeMarketCandlesTransformer.transform));
+      .then((response) => {
+        if (ohlcv) {
+          return response.data.map((x) => x.map(stringToFloat));
+        }
+
+        return response.data.map(TradeMarketCandlesTransformer.transform);
+      });
   };
 
   /**
