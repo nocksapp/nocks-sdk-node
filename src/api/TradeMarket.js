@@ -108,19 +108,25 @@ module.exports = (config) => {
    * @param start
    * @param end
    * @param interval
+   * @param ohlcv
    */
   const candles = ({
-    code, start, end, interval,
+    code, start, end, interval, ohlcv = false,
   }) => {
     // Code is required
     if (!isValidRequiredString(code)) {
       return Promise.reject(new ValidationError('Cannot retrieve candles without "code"', constants.errors.INVALID_CODE));
     }
 
+    let url = `/trade-market/${code}/candles/${start}/${end}/${interval}`;
+    if (ohlcv) {
+      url += '?format=ohlcv';
+    }
+
     return makeRequest({
       ...config.request,
       baseURL: config.baseUrl,
-      url: `/trade-market/${code}/candles/${start}/${end}/${interval}`,
+      url,
     })
       .then((response) => response.data.map(TradeMarketCandlesTransformer.transform));
   };
