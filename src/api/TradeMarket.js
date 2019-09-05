@@ -44,20 +44,26 @@ module.exports = (config) => {
   };
 
   /**
-   * Cancel a transaction
+   * Get the trade market book
    *
-   * @param uuid
+   * @param code
+   * @param range
    */
-  const book = ({ code }) => {
+  const book = ({ code, range = 100 }) => {
     // Code is required
     if (!isValidRequiredString(code)) {
       return Promise.reject(new ValidationError('Cannot retrieve market book without "code"', constants.errors.INVALID_CODE));
     }
 
+    let url = `/trade-market/${code}/book/`;
+    if (range) {
+      url += `?range=${range}`;
+    }
+
     return makeRequest({
       ...config.request,
       baseURL: config.baseUrl,
-      url: `/trade-market/${code}/book`,
+      url,
     })
       .then((response) => TradeMarketBookTransformer.transform(response.data));
   };
