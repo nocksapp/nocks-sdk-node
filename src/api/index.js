@@ -1,3 +1,4 @@
+const merge = require('lodash.merge');
 const { isValidRequiredString } = require('../helpers');
 const { ConfigurationError } = require('./../errors');
 const constants = require('./../constants');
@@ -31,7 +32,7 @@ const Withdrawal = require('./Withdrawal');
  * @param accessToken - Not required for public resources
  * @param config - Additional config
  */
-const context = ({ platform = constants.platform.PRODUCTION.name, accessToken = null } = {}, config = {}) => {
+const context = ({ platform = constants.platform.PRODUCTION.name, accessToken = null, ...config } = {}) => {
   const platforms = Object.values(constants.platform);
   const platformNames = platforms.map((x) => x.name);
 
@@ -40,8 +41,7 @@ const context = ({ platform = constants.platform.PRODUCTION.name, accessToken = 
   }
 
   const platformConstants = platforms.find((x) => x.name === platform);
-
-  const apiConfig = Object.assign({}, config, initialConfig[platform], {
+  const apiConfig = merge({}, config, initialConfig[platform], {
     baseUrl: platformConstants.api,
     accessToken,
     platform: platformConstants,

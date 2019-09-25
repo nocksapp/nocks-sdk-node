@@ -1,4 +1,5 @@
 const axios = require('axios');
+const merge = require('lodash.merge');
 
 const { ConfigurationError, ValidationError } = require('./../errors');
 const constants = require('./../constants');
@@ -34,7 +35,7 @@ const makeRequest = (config, { callType = 'api' } = {}) => {
     }
   }
 
-  return axios.request(Object.assign({}, defaultConfig, config))
+  return axios.request(merge(defaultConfig, config))
     .then((response) => response.data)
     .catch((err) => {
       if (err.response) {
