@@ -7,7 +7,7 @@ const dateProperties = [
   'amount_net', 'amount_vat', 'amount_gross', 'vat', 'rate', 'rate_actual',
   'tip', 'total', 'last', 'volume', 'quote_volume', 'base_volume', 'low', 'high', 'buy', 'sell', 'size',
   'base_sum', 'sum', 'cost', 'eur_value', 'average', 'open', 'close', 'available', 'reserved', 'stop_rate',
-  'value_estimation',
+  'value_estimation', 'fixed',
 ];
 
 /**

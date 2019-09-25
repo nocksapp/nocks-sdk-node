@@ -7,6 +7,7 @@ const Address = require('./Address');
 const Balance = require('./Balance');
 const Bill = require('./Bill');
 const Deposit = require('./Deposit');
+const Fee = require('./Fee');
 const FundingSource = require('./FundingSource');
 const Merchant = require('./Merchant');
 const MerchantClearing = require('./MerchantClearing');
@@ -51,6 +52,7 @@ const context = ({ platform = constants.platform.PRODUCTION.name, accessToken = 
     balance: Balance(apiConfig),
     bill: Bill(apiConfig),
     deposit: Deposit(apiConfig),
+    fee: Fee(apiConfig),
     fundingSource: FundingSource(apiConfig),
     merchant: Merchant(apiConfig),
     merchantClearing: MerchantClearing(apiConfig),
