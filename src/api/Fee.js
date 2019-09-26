@@ -1,4 +1,5 @@
 const { makeRequest } = require('../helpers');
+const { positiveInteger } = require('./../utilities');
 const AmountTransformer = require('./transformers/Amount');
 const PaginationTransformer = require('./transformers/Pagination');
 
@@ -6,11 +7,11 @@ module.exports = (config) => {
   /**
    * Get the fee settings
    */
-  const get = () => makeRequest({
+  const get = ({ page = 1 } = {}) => makeRequest({
     ...config.request,
     method: 'GET',
     baseURL: config.baseUrl,
-    url: '/fee',
+    url: `/fee?page=${positiveInteger(page, 1)}`,
     accessToken: config.accessToken,
   })
     .then((response) => ({
