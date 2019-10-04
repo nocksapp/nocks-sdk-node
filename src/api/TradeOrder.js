@@ -25,9 +25,9 @@ module.exports = (config) => {
    * Get trade orders
    */
   const find = ({
-    page = 1, tradeMarket = null, side = null, status = null, label = null, amountFilled = null,
+    page = 1, limit = 15, tradeMarket = null, side = null, status = null, label = null, amountFilled = null,
   } = {}) => {
-    const query = { page: positiveInteger(page, 1) };
+    const query = { page: positiveInteger(page, 1), limit: positiveInteger(limit, 15) };
 
     if (tradeMarket !== null) {
       query['trade-market'] = tradeMarket;

@@ -14,10 +14,10 @@ module.exports = (config) => {
   /**
    * Get trade markets
    */
-  const find = ({ page = 1 } = {}) => makeRequest({
+  const find = ({ page = 1, limit = 15 } = {}) => makeRequest({
     ...config.request,
     baseURL: config.baseUrl,
-    url: `/trade-market?page=${positiveInteger(page, 1)}`,
+    url: `/trade-market?page=${positiveInteger(page, 1)}&limit=${positiveInteger(limit, 15)}`,
   })
     .then((response) => ({
       data: response.data.map(TradeMarketTransformer.transform),

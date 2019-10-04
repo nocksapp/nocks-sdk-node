@@ -25,8 +25,8 @@ module.exports = (config) => {
   /**
    * Get balance
    */
-  const find = ({ page = 1, type = null } = {}) => {
-    const query = { page: positiveInteger(page, 1) };
+  const find = ({ page = 1, limit = 15, type = null } = {}) => {
+    const query = { page: positiveInteger(page, 1), limit: positiveInteger(limit, 15) };
 
     if (type !== null) {
       query.type = type;
