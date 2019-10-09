@@ -2,7 +2,7 @@ const { makeRequest, isValidRequiredString } = require('../helpers');
 const { ValidationError } = require('./../errors');
 const PaginationTransformer = require('./transformers/Pagination');
 const WithdrawalTransformer = require('./transformers/Withdrawal');
-const { positiveInteger } = require('./../utilities');
+const { buildQueryString, positiveInteger } = require('./../utilities');
 const constants = require('./../constants');
 
 module.exports = (config) => {
@@ -25,17 +25,28 @@ module.exports = (config) => {
 
   /**
    * Get withdrawals
+   *
+   * @param page
+   * @param balance
    */
-  const find = ({ page = 1 } = {}) => makeRequest({
-    ...config.request,
-    baseURL: config.baseUrl,
-    url: `/withdrawal?page=${positiveInteger(page, 1)}`,
-    accessToken: config.accessToken,
-  })
-    .then((response) => ({
-      data: response.data.map(WithdrawalTransformer.transform),
-      pagination: PaginationTransformer.transform(response.meta.pagination),
-    }));
+  const find = ({ page = 1, balance = null } = {}) => {
+    const query = { page: positiveInteger(page, 1) };
+
+    if (balance !== null) {
+      query.balance = balance;
+    }
+
+    return makeRequest({
+      ...config.request,
+      baseURL: config.baseUrl,
+      url: `/withdrawal?${buildQueryString(query)}`,
+      accessToken: config.accessToken,
+    })
+      .then((response) => ({
+        data: response.data.map(WithdrawalTransformer.transform),
+        pagination: PaginationTransformer.transform(response.meta.pagination),
+      }));
+  };
 
   /**
    * Get withdrawal

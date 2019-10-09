@@ -2,7 +2,7 @@ const { makeRequest, isValidRequiredString } = require('../helpers');
 const { ValidationError } = require('./../errors');
 const PaginationTransformer = require('./transformers/Pagination');
 const DepositTransformer = require('./transformers/Deposit');
-const { positiveInteger } = require('./../utilities');
+const { buildQueryString, positiveInteger } = require('./../utilities');
 const constants = require('./../constants');
 
 module.exports = (config) => {
@@ -24,17 +24,28 @@ module.exports = (config) => {
 
   /**
    * Get deposits
+   *
+   * @param page
+   * @param balance
    */
-  const find = ({ page = 1 } = {}) => makeRequest({
-    ...config.request,
-    baseURL: config.baseUrl,
-    url: `/deposit?page=${positiveInteger(page, 1)}`,
-    accessToken: config.accessToken,
-  })
-    .then((response) => ({
-      data: response.data.map(DepositTransformer.transform),
-      pagination: PaginationTransformer.transform(response.meta.pagination),
-    }));
+  const find = ({ page = 1, balance = null } = {}) => {
+    const query = { page: positiveInteger(page, 1) };
+
+    if (balance !== null) {
+      query.balance = balance;
+    }
+
+    return makeRequest({
+      ...config.request,
+      baseURL: config.baseUrl,
+      url: `/deposit?${buildQueryString(query)}`,
+      accessToken: config.accessToken,
+    })
+      .then((response) => ({
+        data: response.data.map(DepositTransformer.transform),
+        pagination: PaginationTransformer.transform(response.meta.pagination),
+      }));
+  };
 
   /**
    * Get deposit
