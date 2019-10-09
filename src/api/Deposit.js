@@ -10,12 +10,13 @@ module.exports = (config) => {
    * Create a deposit
    *
    * @param data
+   * @param theme
    */
-  const create = (data) => makeRequest({
+  const create = (data, { theme = '' } = {}) => makeRequest({
     ...config.request,
     method: 'POST',
     baseURL: config.baseUrl,
-    url: '/deposit',
+    url: `/deposit?theme=${theme}`,
     accessToken: config.accessToken,
     data: DepositTransformer.reverseTransform(data, { prepareForRequest: true }),
   })
