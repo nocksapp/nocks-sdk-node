@@ -18,10 +18,13 @@ const transformCurrency = (currency) => AmountTransformer.transform(Object.assig
  * @param config
  */
 const transform = (balance, config) => AmountTransformer.transform(Object.assign({}, balance, {
-  deposit_limit_month: AmountTransformer.transform(balance.deposit_limit_month),
+  deposit_limit_month: balance.deposit_limit_month
+    ? AmountTransformer.transform(balance.deposit_limit_month)
+    : balance.deposit_limit_month,
   currency: transformCurrency(AmountTransformer.transform(balance.currency.data)),
   balanceable: balance.type === 'merchant'
-    ? MerchantTransformer.transform(balance.balanceable.data, config) : UserTransformer.transform(balance.balanceable.data),
+    ? MerchantTransformer.transform(balance.balanceable.data, config)
+    : UserTransformer.transform(balance.balanceable.data),
 }));
 
 /**
