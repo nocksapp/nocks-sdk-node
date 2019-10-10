@@ -18,6 +18,7 @@ const transformCurrency = (currency) => AmountTransformer.transform(Object.assig
  * @param config
  */
 const transform = (balance, config) => AmountTransformer.transform(Object.assign({}, balance, {
+  deposit_limit_month: AmountTransformer.transform(balance.deposit_limit_month),
   currency: transformCurrency(AmountTransformer.transform(balance.currency.data)),
   balanceable: balance.type === 'merchant'
     ? MerchantTransformer.transform(balance.balanceable.data, config) : UserTransformer.transform(balance.balanceable.data),
@@ -31,6 +32,11 @@ const transform = (balance, config) => AmountTransformer.transform(Object.assign
  */
 const reverseTransform = (balance, { prepareForRequest = false } = {}) => {
   const reverseObject = {};
+
+  // deposit_limit_month
+  if (balance.deposit_limit_month && !prepareForRequest) {
+    reverseObject.deposit_limit_month = AmountTransformer.reverseTransform(balance.deposit_limit_month);
+  }
 
   // Currency
   if (balance.currency && !prepareForRequest) {
