@@ -2,7 +2,7 @@ const { makeRequest, isValidRequiredString } = require('../helpers');
 const { ValidationError } = require('./../errors');
 const PaginationTransformer = require('./transformers/Pagination');
 const FundingSourceTransformer = require('./transformers/FundingSource');
-const { positiveInteger } = require('./../utilities');
+const { buildQueryString, positiveInteger } = require('./../utilities');
 const constants = require('./../constants');
 
 module.exports = (config) => {
@@ -35,16 +35,24 @@ module.exports = (config) => {
   /**
    * Get funding sources
    */
-  const find = ({ page = 1 } = {}) => makeRequest({
-    ...config.request,
-    baseURL: config.baseUrl,
-    url: `/funding-source?page=${positiveInteger(page, 1)}`,
-    accessToken: config.accessToken,
-  })
-    .then((response) => ({
-      data: response.data.map(FundingSourceTransformer.transform),
-      pagination: PaginationTransformer.transform(response.meta.pagination),
-    }));
+  const find = ({ page = 1, limit = 15, currency = null } = {}) => {
+    const query = { page: positiveInteger(page, 1), limit: positiveInteger(limit, 15) };
+
+    if (currency !== null) {
+      query.currency = currency;
+    }
+
+    return makeRequest({
+      ...config.request,
+      baseURL: config.baseUrl,
+      url: `/funding-source?${buildQueryString(query)}`,
+      accessToken: config.accessToken,
+    })
+      .then((response) => ({
+        data: response.data.map(FundingSourceTransformer.transform),
+        pagination: PaginationTransformer.transform(response.meta.pagination),
+      }));
+  };
 
   /**
    * Get funding source
