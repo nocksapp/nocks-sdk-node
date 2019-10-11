@@ -99,11 +99,44 @@ module.exports = (config) => {
     });
   };
 
+  /**
+   * Verify a two factor code for the authenticated user
+   *
+   * @param twoFactorCode
+   */
+  const verifyTwoFactorCode = ({ twoFactorCode }) => {
+    // TwoFactorCode is required
+    if (!isValidRequiredString(twoFactorCode)) {
+      return Promise.reject(new ValidationError('Cannot verify without "twoFactorCode"', constants.errors.INVALID_TWO_FACTOR_CODE));
+    }
+
+    return makeRequest({
+      ...config.request,
+      method: 'POST',
+      baseURL: config.baseUrl,
+      url: '/user/2fa/verify',
+      accessToken: config.accessToken,
+      data: {
+        token: twoFactorCode,
+      },
+    })
+      .then(() => true)
+      .catch((err) => {
+        if (err.status && err.status === 400) {
+          // Invalid two factor code
+          return false;
+        }
+
+        throw err;
+      });
+  };
+
   return {
     create,
     findAuthenticated: () => findOne(),
     findOne,
     update,
     delete: remove,
+    verifyTwoFactorCode,
   };
 };
