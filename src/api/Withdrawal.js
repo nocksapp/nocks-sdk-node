@@ -18,7 +18,7 @@ module.exports = (config) => {
     baseURL: config.baseUrl,
     url: '/withdrawal',
     accessToken: config.accessToken,
-    twoFactorCode,
+    twoFactorCode: twoFactorCode || undefined,
     data: WithdrawalTransformer.reverseTransform(data, { prepareForRequest: true }),
   })
     .then((response) => WithdrawalTransformer.transform(response.data));
