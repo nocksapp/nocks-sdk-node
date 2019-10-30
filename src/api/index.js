@@ -41,11 +41,11 @@ const context = ({ platform = constants.platform.PRODUCTION.name, accessToken = 
   }
 
   const platformConstants = platforms.find((x) => x.name === platform);
-  const apiConfig = merge({}, config, initialConfig[platform], {
+  const apiConfig = merge({}, initialConfig[platform], {
     baseUrl: platformConstants.api,
     accessToken,
     platform: platformConstants,
-  });
+  }, config);
 
   return {
     address: Address(apiConfig),
