@@ -69,7 +69,13 @@ module.exports = {
     CANCELLED: 'cancelled',
   },
   decimals: {
+    BTC: 8,
+    ETH: 8,
     EUR: 2,
+    GET: 8,
+    ICY: 8,
+    LTC: 8,
+    NCKS: 4,
     NLG: 8,
   },
 };
