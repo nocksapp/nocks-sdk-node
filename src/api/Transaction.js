@@ -42,7 +42,7 @@ module.exports = (config) => {
    * Get transactions
    */
   const find = ({
-    page = 1, status = null, merchantProfileUuid = null, merchantReference = null, search = null,
+    page = 1, status = null, merchantProfileUuid = null, merchantReference = null, search = null, currency = null,
   } = {}) => {
     const query = { page: positiveInteger(page, 1) };
 
@@ -60,6 +60,10 @@ module.exports = (config) => {
 
     if (search !== null) {
       query.search = search;
+    }
+
+    if (currency !== null) {
+      query.currency = currency;
     }
 
     return makeRequest({
