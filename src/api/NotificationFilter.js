@@ -4,6 +4,7 @@ const { positiveInteger } = require('./../utilities');
 const PaginationTransformer = require('./transformers/Pagination');
 const NotificationFilterTransformer = require('./transformers/NotificationFilter');
 const constants = require('./../constants');
+const { buildQueryString } = require('../utilities');
 
 module.exports = (config) => {
   /**
@@ -25,17 +26,26 @@ module.exports = (config) => {
    * Get notification filters
    *
    * @param page
+   * @param method
    */
-  const find = ({ page = 1 } = {}) => makeRequest({
-    ...config.request,
-    baseURL: config.baseUrl,
-    url: `/notification-filter?page=${positiveInteger(page, 1)}`,
-    accessToken: config.accessToken,
-  })
-    .then((response) => ({
-      data: response.data.map(NotificationFilterTransformer.transform),
-      pagination: PaginationTransformer.transform(response.meta.pagination),
-    }));
+  const find = ({ page = 1, method = null } = {}) => {
+    const query = { page: positiveInteger(page, 1) };
+
+    if (method !== null) {
+      query.method = method;
+    }
+
+    return makeRequest({
+      ...config.request,
+      baseURL: config.baseUrl,
+      url: `/notification-filter?${buildQueryString(query)}`,
+      accessToken: config.accessToken,
+    })
+      .then((response) => ({
+        data: response.data.map(NotificationFilterTransformer.transform),
+        pagination: PaginationTransformer.transform(response.meta.pagination),
+      }));
+  };
 
   /**
    * Get a single notification-filter
